@@ -1,0 +1,1 @@
+import com.google.inject.AbstractModule;import v2.customer.CustomerRepository;import v2.customer.JPACustomerRepository;public class Module extends AbstractModule {    @Override    protected void configure() {        bind(CustomerRepository.class).to(JPACustomerRepository.class);    }}
