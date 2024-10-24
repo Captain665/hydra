@@ -16,10 +16,8 @@ libraryDependencies += javaJpa
 // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
 libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.1.Final"
 
-
 // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 libraryDependencies += "com.mysql" % "mysql-connector-j" % "9.1.0"
-
 
 // https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api
 libraryDependencies += "jakarta.persistence" % "jakarta.persistence-api" % "3.2.0"
@@ -31,6 +29,22 @@ libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "3.6.9.Fina
 
 // https://mvnrepository.com/artifact/org.playframework/play-java-jpa
 libraryDependencies += "org.playframework" %% "play-java-jpa" % "3.0.5"
+
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+libraryDependencies += "io.jsonwebtoken" % "jjwt-api" % "0.12.6"
+
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-impl
+libraryDependencies += "io.jsonwebtoken" % "jjwt-impl" % "0.12.6" % "runtime"
+
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-jackson
+libraryDependencies += "io.jsonwebtoken" % "jjwt-jackson" % "0.12.6" % "runtime"
+
+// https://mvnrepository.com/artifact/org.mindrot/jbcrypt
+libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
+
+
+
+
 
 
 
