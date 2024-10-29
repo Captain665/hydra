@@ -10,3 +10,7 @@ GET     /health                     controllers.HomeController.health()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 POST    /v2/customer                v2.customer.CustomerController.create(request: Request)
+GET     /v2/customer/all            v2.customer.CustomerController.getAll(request: Request)
+GET     /v2/customer/:id            v2.customer.CustomerController.get(Request: Request, id: Long)
+
+POST    /v2/user/login              v2.user.UserController.login(Request: Request)

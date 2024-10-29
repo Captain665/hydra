@@ -42,6 +42,10 @@ libraryDependencies += "io.jsonwebtoken" % "jjwt-jackson" % "0.12.6" % "runtime"
 // https://mvnrepository.com/artifact/org.mindrot/jbcrypt
 libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
 
+// https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.17.0"
+
+
 
 
 
