@@ -45,6 +45,10 @@ libraryDependencies += "org.mindrot" % "jbcrypt" % "0.4"
 // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
 libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.17.0"
 
+// https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client
+libraryDependencies += "org.asynchttpclient" % "async-http-client" % "3.0.0"
+
+
 
 
 
