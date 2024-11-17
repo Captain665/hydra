@@ -40,8 +40,9 @@
   </appender>
 
   <logger name="play" level="INFO"/>
-  <logger name="application" level="DEBUG"/>
-  <logger name="play.mvc.Action" level="DEBUG" />
+  <logger name="application" level="TRACE"/>
+  <logger name="play.mvc.Action" level="TRACE" />
+  <logger name="common.Authorization.PermissionBasedAuthorizationAction" level="TRACE" />
 
   <root level="WARN">
     <appender-ref ref="ASYNCFILE"/>
