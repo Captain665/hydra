@@ -1,1 +1,7 @@
-package common.enums;public enum Status {    SUCCESS,    FAILURE,    UNAUTHORIZED}
+package common.enums;
+
+public enum Status {
+    SUCCESS,
+    FAILURE,
+    UNAUTHORIZED
+}

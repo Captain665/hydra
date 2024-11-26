@@ -1,1 +1,4 @@
-package v2.pnr;public class PNRResourceHandler {}
+package v2.pnr;
+
+public class PNRResourceHandler {
+}
