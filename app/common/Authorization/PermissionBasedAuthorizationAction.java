@@ -29,82 +29,82 @@ import static common.Attrs.AUTH_HEADER;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAuthorization> {
-    private final Logger.ALogger logger = Logger.of("common.Authorization.PermissionBaseAuthorization");
-    private final UserRepository userRepository;
-    private final RolePermissionsRepository permissionsRepository;
-    private final CustomerRepository customerRepository;
+	private final Logger.ALogger logger = Logger.of("common.Authorization.PermissionBaseAuthorization");
+	private final UserRepository userRepository;
+	private final RolePermissionsRepository permissionsRepository;
+	private final CustomerRepository customerRepository;
 
-    @Inject
-    public PermissionBasedAuthorizationAction(UserRepository userRepository, RolePermissionsRepository permissionsRepository, CustomerRepository customerRepository) {
-        this.userRepository = userRepository;
-        this.permissionsRepository = permissionsRepository;
-        this.customerRepository = customerRepository;
-    }
-
-
-    @Override
-    public CompletionStage<Result> call(Http.Request request) {
-        logger.info("[" + request.id() + "] " + " json" + request.body());
-        String token = request.header(AUTH_HEADER).orElse(StringUtils.EMPTY);
-        if (token.isEmpty()) {
-            logger.error("[" + request.id() + "] " + "token should not empty");
-            return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("token should not empty"))));
-        }
-        try {
-            Map<String, String> contains = JwtUtilities.decodeToken(token);
-            String userId = contains.get("id");
-            List<String> payload = Arrays.asList(contains.get("payload").split("="));
-            if (contains.get("payload").contains("role")) {
-                String role = Arrays.asList(payload.get(1).split("}")).get(0);
-                if (userId == null) {
-                    logger.info("[" + request.id() + "] " + "response: " + "Not able to verify user from auth token:");
-                    return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to verify user from auth token:"))));
-                }
-                return checkPermission(Long.valueOf(userId), role, request);
-            }
-            logger.info("[" + request.id() + "] " + "response: " + "Not authorize to access this");
-            return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
-        } catch (Exception e) {
-            logger.info("[" + request.id() + "] " + "Response: " + "Not able to determine user from auth token.");
-            return supplyAsync(() -> badRequest(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
-        }
-    }
+	@Inject
+	public PermissionBasedAuthorizationAction(UserRepository userRepository, RolePermissionsRepository permissionsRepository, CustomerRepository customerRepository) {
+		this.userRepository = userRepository;
+		this.permissionsRepository = permissionsRepository;
+		this.customerRepository = customerRepository;
+	}
 
 
-    private CompletionStage<Result> checkPermission(Long userId, String role, Http.Request request) {
-        final PermissionType[] callRestrictedPermission = configuration.value();
-        return permissionsRepository.getPermissions(role).thenComposeAsync(
-                rolePermissionModelStream -> {
-                    List<PermissionType> permissions = rolePermissionModelStream.map(UserPermissionModel::getPermission)
-                            .collect(Collectors.toList());
-                    for (PermissionType permission : callRestrictedPermission) {
-                        if (permissions.contains(permission)) {
-                            if ("CUSTOMER".equalsIgnoreCase(role)) {
-                                return customerRepository.getById(userId).thenComposeAsync(
-                                        customerModel -> {
-                                            if (customerModel.isEmpty()) {
-                                                return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
-                                            }
-                                            return delegate.call(request.addAttr(Attrs.CUSTOMER, customerModel.get())
-                                                    .addAttr(TypedKey.create("role"), role));
-                                        }
+	@Override
+	public CompletionStage<Result> call(Http.Request request) {
+		logger.info("[" + request.id() + "] " + " json" + request.body());
+		String token = request.header(AUTH_HEADER).orElse(StringUtils.EMPTY);
+		if (token.isEmpty()) {
+			logger.error("[" + request.id() + "] " + "token should not empty");
+			return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("token should not empty"))));
+		}
+		try {
+			Map<String, String> contains = JwtUtilities.decodeToken(token);
+			String userId = contains.get("id");
+			List<String> payload = Arrays.asList(contains.get("payload").split("="));
+			if (contains.get("payload").contains("role")) {
+				String role = Arrays.asList(payload.get(1).split("}")).get(0);
+				if (userId == null) {
+					logger.info("[" + request.id() + "] " + "response: " + "Not able to verify user from auth token:");
+					return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to verify user from auth token:"))));
+				}
+				return checkPermission(Long.valueOf(userId), role, request);
+			}
+			logger.info("[" + request.id() + "] " + "response: " + "Not authorize to access this");
+			return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
+		} catch (Exception e) {
+			logger.info("[" + request.id() + "] " + "Response: " + "Not able to determine user from auth token.");
+			return supplyAsync(() -> badRequest(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
+		}
+	}
 
-                                );
-                            }
-                            return userRepository.findByUserId(userId).thenComposeAsync(
-                                    userModel -> {
-                                        if (userModel.isEmpty()) {
-                                            logger.error("[" + request.id() + "] " + "response: " + "Not able to determine user from auth token.");
-                                            return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
-                                        }
-                                        return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(TypedKey.create("role"), role));
-                                    }
-                            );
-                        }
-                        return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
-                    }
-                    return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
-                }
-        );
-    }
+
+	private CompletionStage<Result> checkPermission(Long userId, String role, Http.Request request) {
+		final PermissionType[] callRestrictedPermission = configuration.value();
+		return permissionsRepository.getPermissions(role).thenComposeAsync(
+				rolePermissionModelStream -> {
+					List<PermissionType> permissions = rolePermissionModelStream.map(UserPermissionModel::getPermission)
+							.collect(Collectors.toList());
+					for (PermissionType permission : callRestrictedPermission) {
+						if (permissions.contains(permission)) {
+							if ("CUSTOMER".equalsIgnoreCase(role)) {
+								return customerRepository.getById(userId).thenComposeAsync(
+										customerModel -> {
+											if (customerModel.isEmpty()) {
+												return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
+											}
+											return delegate.call(request.addAttr(Attrs.CUSTOMER, customerModel.get())
+													.addAttr(TypedKey.create("role"), role));
+										}
+
+								);
+							}
+							return userRepository.findByUserId(userId).thenComposeAsync(
+									userModel -> {
+										if (userModel.isEmpty()) {
+											logger.error("[" + request.id() + "] " + "response: " + "Not able to determine user from auth token.");
+											return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
+										}
+										return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(TypedKey.create("role"), role));
+									}
+							);
+						}
+						return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
+					}
+					return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
+				}
+		);
+	}
 }

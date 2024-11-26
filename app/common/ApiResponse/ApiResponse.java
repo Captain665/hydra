@@ -3,7 +3,7 @@ package common.ApiResponse;
 import common.enums.Status;
 
 public class ApiResponse {
-	
+
 
 	public Status status;
 	public String message;

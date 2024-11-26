@@ -19,61 +19,61 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @Singleton
 public class JPAOrderRepository implements OrderRepository {
 
-    private final JPAApi jpaApi;
-    private final OrderExecutionContext ec;
+	private final JPAApi jpaApi;
+	private final OrderExecutionContext ec;
 
-    private final Logger.ALogger logger = Logger.of("order.repository");
+	private final Logger.ALogger logger = Logger.of("order.repository");
 
-    @Inject
-    public JPAOrderRepository(JPAApi jpaApi, OrderExecutionContext ec) {
-        this.jpaApi = jpaApi;
-        this.ec = ec;
-    }
+	@Inject
+	public JPAOrderRepository(JPAApi jpaApi, OrderExecutionContext ec) {
+		this.jpaApi = jpaApi;
+		this.ec = ec;
+	}
 
 
-    @Override
-    public CompletionStage<OrderModel> create(OrderModel model) {
-        return supplyAsync(() -> wrap(em -> {
+	@Override
+	public CompletionStage<OrderModel> create(OrderModel model) {
+		return supplyAsync(() -> wrap(em -> {
 
-            List<OrderItemModel> orderItems = model.getOrderItem();
-            OrderOutletModel orderOutlet = model.getOrderOutlet();
+			List<OrderItemModel> orderItems = model.getOrderItem();
+			OrderOutletModel orderOutlet = model.getOrderOutlet();
 
 //            logger.info("save order repository " + model);
 
-            OrderModel orderModel = insert(em, model);
+			OrderModel orderModel = insert(em, model);
 
-            if (orderItems != null) {
-                List<OrderItemModel> items = orderItems.stream().map(
-                        orderItem -> {
-                            orderItem.setOrder(orderModel);
-                            return insert(em, orderItem);
-                        }
-                ).collect(Collectors.toList());
-                orderModel.setOrderItem(items);
-            }
+			if (orderItems != null) {
+				List<OrderItemModel> items = orderItems.stream().map(
+						orderItem -> {
+							orderItem.setOrder(orderModel);
+							return insert(em, orderItem);
+						}
+				).collect(Collectors.toList());
+				orderModel.setOrderItem(items);
+			}
 
-            if (orderOutlet != null) {
-                orderOutlet.setOrder(orderModel);
-                OrderOutletModel orderOutletModel = insert(em, orderOutlet);
-                orderModel.setOrderOutlet(orderOutletModel);
-            }
-            return orderModel;
-        }), ec);
-    }
+			if (orderOutlet != null) {
+				orderOutlet.setOrder(orderModel);
+				OrderOutletModel orderOutletModel = insert(em, orderOutlet);
+				orderModel.setOrderOutlet(orderOutletModel);
+			}
+			return orderModel;
+		}), ec);
+	}
 
-    private <T> T wrap(Function<EntityManager, T> function) {
-        return jpaApi.withTransaction(function);
-    }
+	private <T> T wrap(Function<EntityManager, T> function) {
+		return jpaApi.withTransaction(function);
+	}
 
-    private OrderModel insert(EntityManager em, OrderModel model) {
-        return em.merge(model);
-    }
+	private OrderModel insert(EntityManager em, OrderModel model) {
+		return em.merge(model);
+	}
 
-    private OrderItemModel insert(EntityManager em, OrderItemModel model) {
-        return em.merge(model);
-    }
+	private OrderItemModel insert(EntityManager em, OrderItemModel model) {
+		return em.merge(model);
+	}
 
-    private OrderOutletModel insert(EntityManager em, OrderOutletModel model) {
-        return em.merge(model);
-    }
+	private OrderOutletModel insert(EntityManager em, OrderOutletModel model) {
+		return em.merge(model);
+	}
 }

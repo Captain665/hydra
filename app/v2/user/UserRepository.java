@@ -9,8 +9,8 @@ import java.util.concurrent.CompletionStage;
 
 public interface UserRepository {
 
-    CompletionStage<Optional<UserModel>> findByUserId(Long id);
+	CompletionStage<Optional<UserModel>> findByUserId(Long id);
 
-    CompletionStage<Optional<List<UserModel>>> findByUserName(String mobile);
+	CompletionStage<Optional<List<UserModel>>> findByUserName(String mobile);
 
 }

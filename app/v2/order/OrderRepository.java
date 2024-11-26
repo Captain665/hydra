@@ -5,6 +5,6 @@ import common.order.model.OrderModel;
 import java.util.concurrent.CompletionStage;
 
 public interface OrderRepository {
-    CompletionStage<OrderModel> create(OrderModel model);
+	CompletionStage<OrderModel> create(OrderModel model);
 
 }

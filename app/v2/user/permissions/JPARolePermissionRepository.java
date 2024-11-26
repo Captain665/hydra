@@ -18,31 +18,31 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 @Singleton
 public class JPARolePermissionRepository implements RolePermissionsRepository {
 
-    private final JPAApi jpaApi;
-    private final UserPermissionExecutionContext ec;
-    final Logger.ALogger logger = Logger.of("application.JPARolePermissionRepository");
+	private final JPAApi jpaApi;
+	private final UserPermissionExecutionContext ec;
+	final Logger.ALogger logger = Logger.of("application.JPARolePermissionRepository");
 
-    @Inject
-    public JPARolePermissionRepository(JPAApi jpaApi, UserPermissionExecutionContext ec) {
-        this.jpaApi = jpaApi;
-        this.ec = ec;
-    }
+	@Inject
+	public JPARolePermissionRepository(JPAApi jpaApi, UserPermissionExecutionContext ec) {
+		this.jpaApi = jpaApi;
+		this.ec = ec;
+	}
 
 
-    @Override
-    public CompletionStage<Stream<UserPermissionModel>> getPermissions(String role) {
-        return supplyAsync(() -> wrap(em -> getAllPermission(em, role)), ec);
-    }
+	@Override
+	public CompletionStage<Stream<UserPermissionModel>> getPermissions(String role) {
+		return supplyAsync(() -> wrap(em -> getAllPermission(em, role)), ec);
+	}
 
-    private <T> T wrap(Function<EntityManager, T> function) {
-        return jpaApi.withTransaction(function);
-    }
+	private <T> T wrap(Function<EntityManager, T> function) {
+		return jpaApi.withTransaction(function);
+	}
 
-    private Stream<UserPermissionModel> getAllPermission(EntityManager em, String role) {
-        TypedQuery<UserPermissionModel> query = em.createQuery(
-                        "SELECT m FROM UserPermissionModel m " +
-                                "where role = :role", UserPermissionModel.class)
-                .setParameter("role", role);
-        return query.getResultList().stream();
-    }
+	private Stream<UserPermissionModel> getAllPermission(EntityManager em, String role) {
+		TypedQuery<UserPermissionModel> query = em.createQuery(
+						"SELECT m FROM UserPermissionModel m " +
+								"where role = :role", UserPermissionModel.class)
+				.setParameter("role", role);
+		return query.getResultList().stream();
+	}
 }

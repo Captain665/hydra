@@ -6,5 +6,5 @@ import java.util.concurrent.CompletionStage;
 import java.util.stream.Stream;
 
 public interface RolePermissionsRepository {
-    CompletionStage<Stream<UserPermissionModel>> getPermissions(String role);
+	CompletionStage<Stream<UserPermissionModel>> getPermissions(String role);
 }

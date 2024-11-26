@@ -2,36 +2,41 @@ package controllers;
 
 import play.data.validation.Constraints;
 
-public class $model;format="Camel"$Data {
+public class $model
 
-    @Constraints.Required
-    private String name;
+;format="Camel"
 
-    @Constraints.Required
-    private Integer age;
+$Data {
 
-    public $model;format="Camel"$Data() {
-    }
+	@Constraints.Required
+	private String name;
 
-    public String getName() {
-        return name;
-    }
+	@Constraints.Required
+	private Integer age;
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public $model ;
+	format = "Camel" $Data() {
+	}
 
-    public Integer getAge() {
-        return age;
-    }
+	public String getName () {
+		return name;
+	}
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+	public void setName (String name){
+		this.name = name;
+	}
 
-    @Override
-    public String toString() {
-        return String.format("$model;format="Camel"$Data(%s, %s)", name, age);
-    }
+	public Integer getAge () {
+		return age;
+	}
+
+	public void setAge (Integer age){
+		this.age = age;
+	}
+
+	@Override
+	public String toString () {
+		return String.format("$model;format="Camel"$Data(%s, %s)", name, age);
+	}
 
 }

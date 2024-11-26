@@ -10,12 +10,12 @@ import v2.user.permissions.RolePermissionsRepository;
 
 public class Module extends AbstractModule {
 
-    @Override
-    protected void configure() {
-        bind(CustomerRepository.class).to(JPACustomerRepository.class);
-        bind(UserRepository.class).to(JPAUserRepository.class);
-        bind(RolePermissionsRepository.class).to(JPARolePermissionRepository.class);
-        bind(OrderRepository.class).to(JPAOrderRepository.class);
-    }
+	@Override
+	protected void configure() {
+		bind(CustomerRepository.class).to(JPACustomerRepository.class);
+		bind(UserRepository.class).to(JPAUserRepository.class);
+		bind(RolePermissionsRepository.class).to(JPARolePermissionRepository.class);
+		bind(OrderRepository.class).to(JPAOrderRepository.class);
+	}
 
 }

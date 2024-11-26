@@ -19,29 +19,46 @@ POST    /$model;format="camel"$        controllers.$model;format="Camel"$Control
 /**
  * $model;format="Camel"$ form controller for Play Java
  */
-public class $model;format="Camel"$Controller extends Controller {
+public class $model
 
-    private final Form<$model;format="Camel"$Data> $model;format="camel"$Form;
-    private final MessagesApi messagesApi;
+;format="Camel"$Controller extends
 
-    @Inject
-    public $model;format="Camel"$Controller(FormFactory formFactory, MessagesApi messagesApi) {
-        this.$model;format="camel"$Form = formFactory.form($model;format="Camel"$Data.class);
-        this.messagesApi = messagesApi;
-    }
+Controller {
 
-    public Result $model;format="camel"$Get(Http.Request request) {
-        return ok(views.html.$model;format="camel"$.form.render($model;format="camel"$Form, request, messagesApi.preferred(request)));
-    }
+	private final Form<$model ;
+	format = "Camel" $Data > $model;
+	format = "camel" $Form;
+	private final MessagesApi messagesApi;
 
-    public Result $model;format="camel"$Post(Http.Request request) {
-        Form<$model;format="Camel"$Data> boundForm = $model;format="camel"$Form.bindFromRequest(request);
-        if (boundForm.hasErrors()) {
-            return badRequest(views.html.$model;format="camel"$.form.render(boundForm, request, messagesApi.preferred(request)));
-        } else {
-            $model;format="Camel"$Data $model;format="camel"$ = boundForm.get();
-            return redirect(routes.$model;format="Camel"$Controller.$model;format="camel"$Get()).flashing("success", "$model;format="Camel"$ " + $model;format="camel"$);
-        }
-    }
+	@Inject
+	public $model ;
+	format = "Camel" $Controller(FormFactory formFactory, MessagesApi messagesApi) {
+		this.$model;
+		format = "camel" $Form = formFactory.form($model; format = "Camel" $Data.class);
+		this.messagesApi = messagesApi;
+	}
+
+	public Result $model;
+	format = "camel" $Get(Http.Request request) {
+		return ok(views.html.$model; format = "camel" $.form.render($model; format = "camel"
+		$Form, request, messagesApi.preferred(request)));
+	}
+
+	public Result $model;
+	format = "camel" $Post(Http.Request request) {
+		Form < $model;
+		format = "Camel" $Data > boundForm = $model;
+		format = "camel" $Form.bindFromRequest(request);
+		if (boundForm.hasErrors()) {
+			return badRequest(views.html.$model; format = "camel"
+			$.form.render(boundForm, request, messagesApi.preferred(request)));
+		} else {
+			$model;
+			format = "Camel" $Data $model;
+			format = "camel" $ = boundForm.get();
+			return redirect(routes.$model; format = "Camel" $Controller.$model;
+			format = "camel" $Get()).flashing("success", "$model;format="Camel"$ " + $model; format = "camel" $);
+		}
+	}
 
 }

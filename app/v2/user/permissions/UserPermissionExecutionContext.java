@@ -6,8 +6,8 @@ import play.api.libs.concurrent.CustomExecutionContext;
 
 public class UserPermissionExecutionContext extends CustomExecutionContext {
 
-    @Inject
-    public UserPermissionExecutionContext(ActorSystem system) {
-        super(system, "user.permissions");
-    }
+	@Inject
+	public UserPermissionExecutionContext(ActorSystem system) {
+		super(system, "user.permissions");
+	}
 }

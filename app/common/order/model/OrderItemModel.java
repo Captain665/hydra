@@ -12,106 +12,106 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "order_items")
 public class OrderItemModel extends BaseModel {
-    @Column(name = "quantity")
-    private Long quantity;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "is_veg")
-    private Boolean isVeg;
-    @Column(name = "base_price")
-    private BigDecimal basePrice;
-    @Column(name = "tax")
-    private BigDecimal tax;
-    @Column(name = "selling_price")
-    private BigDecimal sellingPrice;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "order_id", nullable = false)
-    @JsonBackReference
-    private OrderModel order;
+	@Column(name = "quantity")
+	private Long quantity;
+	@Column(name = "name")
+	private String name;
+	@Column(name = "description")
+	private String description;
+	@Column(name = "is_veg")
+	private Boolean isVeg;
+	@Column(name = "base_price")
+	private BigDecimal basePrice;
+	@Column(name = "tax")
+	private BigDecimal tax;
+	@Column(name = "selling_price")
+	private BigDecimal sellingPrice;
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "order_id", nullable = false)
+	@JsonBackReference
+	private OrderModel order;
 
-    public OrderItemModel() {
-    }
+	public OrderItemModel() {
+	}
 
-    public Long getQuantity() {
-        return quantity;
-    }
+	public Long getQuantity() {
+		return quantity;
+	}
 
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
+	public void setQuantity(Long quantity) {
+		this.quantity = quantity;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public Boolean getVeg() {
-        return isVeg;
-    }
+	public Boolean getVeg() {
+		return isVeg;
+	}
 
-    public void setVeg(Boolean veg) {
-        isVeg = veg;
-    }
+	public void setVeg(Boolean veg) {
+		isVeg = veg;
+	}
 
-    public BigDecimal getBasePrice() {
-        return basePrice;
-    }
+	public BigDecimal getBasePrice() {
+		return basePrice;
+	}
 
-    public void setBasePrice(BigDecimal basePrice) {
-        this.basePrice = basePrice;
-    }
+	public void setBasePrice(BigDecimal basePrice) {
+		this.basePrice = basePrice;
+	}
 
-    public BigDecimal getTax() {
-        return tax;
-    }
+	public BigDecimal getTax() {
+		return tax;
+	}
 
-    public void setTax(BigDecimal tax) {
-        this.tax = tax;
-    }
+	public void setTax(BigDecimal tax) {
+		this.tax = tax;
+	}
 
-    public BigDecimal getSellingPrice() {
-        return sellingPrice;
-    }
+	public BigDecimal getSellingPrice() {
+		return sellingPrice;
+	}
 
-    public void setSellingPrice(BigDecimal sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
+	public void setSellingPrice(BigDecimal sellingPrice) {
+		this.sellingPrice = sellingPrice;
+	}
 
-    public OrderModel getOrder() {
-        return order;
-    }
+	public OrderModel getOrder() {
+		return order;
+	}
 
-    public void setOrder(OrderModel order) {
-        this.order = order;
-    }
+	public void setOrder(OrderModel order) {
+		this.order = order;
+	}
 
-    public OrderItemModel(Long quantity,
-                          String name,
-                          String description,
-                          Boolean isVeg,
-                          BigDecimal basePrice,
-                          BigDecimal tax,
-                          BigDecimal sellingPrice) {
-        this.quantity = quantity;
-        this.name = name;
-        this.description = description;
-        this.isVeg = isVeg;
-        this.basePrice = basePrice;
-        this.tax = tax;
-        this.sellingPrice = sellingPrice;
-    }
+	public OrderItemModel(Long quantity,
+						  String name,
+						  String description,
+						  Boolean isVeg,
+						  BigDecimal basePrice,
+						  BigDecimal tax,
+						  BigDecimal sellingPrice) {
+		this.quantity = quantity;
+		this.name = name;
+		this.description = description;
+		this.isVeg = isVeg;
+		this.basePrice = basePrice;
+		this.tax = tax;
+		this.sellingPrice = sellingPrice;
+	}
 
 }
