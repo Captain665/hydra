@@ -10,10 +10,10 @@ import common.order.resources.OrderResource;
 import jakarta.inject.Inject;
 import play.Logger;
 import play.libs.Json;
-import play.libs.typedmap.TypedKey;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
+import play.mvc.With;
 
 import java.util.concurrent.CompletionStage;
 
@@ -23,7 +23,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 public class OrderController extends Controller {
 
 	private final OrderResourceHandler handler;
-	private final Logger.ALogger logger = Logger.of("v2.order.controller");
+	public final Logger.ALogger logger = Logger.of("v2.order.controller");
 
 	@Inject
 	public OrderController(OrderResourceHandler handler) {
@@ -31,12 +31,14 @@ public class OrderController extends Controller {
 	}
 
 	@PermissionBasedAuthorization({PermissionType.ORDER_CREATE})
+	@With(OrderAction.class)
 	public CompletionStage<Result> create(Http.Request request) {
-		logger.info("run here ..... ");
 		CustomerModel customerModel = request.attrs().get(Attrs.CUSTOMER);
+
 		logger.info("[" + request.id() + "] " + "json " + request.body().asJson());
 		JsonNode json = request.body().asJson();
 		OrderResource resource = Json.fromJson(json, OrderResource.class);
+
 		return handler.createOrder(resource, customerModel).thenComposeAsync(
 				response -> {
 					logger.info("[" + request.id() + "] " + "response is " + response);
@@ -49,3 +51,4 @@ public class OrderController extends Controller {
 		return supplyAsync(() -> ok(Json.toJson(new ApiSuccess("Order list"))));
 	}
 }
+

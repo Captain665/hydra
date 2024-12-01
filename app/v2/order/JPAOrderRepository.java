@@ -9,6 +9,7 @@ import jakarta.persistence.EntityManager;
 import play.Logger;
 import play.db.jpa.JPAApi;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
@@ -38,13 +39,16 @@ public class JPAOrderRepository implements OrderRepository {
 			List<OrderItemModel> orderItems = model.getOrderItem();
 			OrderOutletModel orderOutlet = model.getOrderOutlet();
 
-//            logger.info("save order repository " + model);
+			logger.info("subtotal amount is " + model.getSubTotal());
 
 			OrderModel orderModel = insert(em, model);
 
 			if (orderItems != null) {
 				List<OrderItemModel> items = orderItems.stream().map(
 						orderItem -> {
+							BigDecimal tax = orderItem.getBasePrice().multiply(BigDecimal.valueOf(0.05));
+							orderItem.setTax(tax);
+							orderItem.setSellingPrice(orderItem.getBasePrice().add(tax));
 							orderItem.setOrder(orderModel);
 							return insert(em, orderItem);
 						}
