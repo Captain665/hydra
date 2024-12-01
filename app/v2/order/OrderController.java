@@ -41,7 +41,7 @@ public class OrderController extends Controller {
 
 		return handler.createOrder(resource, customerModel).thenComposeAsync(
 				response -> {
-					logger.info("[" + request.id() + "] " + "response is " + response);
+					logger.info("[" + request.id() + "] " + "response is " + response.toString());
 					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));
 				}
 		);

@@ -225,4 +225,32 @@ public class OrderResponseResource {
 	public void setOrderOutlet(OrderOutletResponseResource orderOutlet) {
 		this.orderOutlet = orderOutlet;
 	}
+
+
+	@Override
+	public String toString() {
+		return "OrderResponseResource{" +
+				"id=" + id +
+				", trainNo='" + trainNo + '\'' +
+				", trainName='" + trainName + '\'' +
+				", stationCode='" + stationCode + '\'' +
+				", stationName='" + stationName + '\'' +
+				", deliveryDate='" + deliveryDate + '\'' +
+				", bookingDate='" + bookingDate + '\'' +
+				", coach='" + coach + '\'' +
+				", berth='" + berth + '\'' +
+				", pnr='" + pnr + '\'' +
+				", paymentType=" + paymentType +
+				", subTotal=" + subTotal +
+				", tax=" + tax +
+				", totalAmount=" + totalAmount +
+				", deliveryCharge=" + deliveryCharge +
+				", discount=" + discount +
+				", customerPayable=" + customerPayable +
+				", orderFrom='" + orderFrom + '\'' +
+				", orderStatus=" + orderStatus +
+				", orderItem=" + orderItem +
+				", orderOutlet=" + orderOutlet +
+				'}';
+	}
 }
