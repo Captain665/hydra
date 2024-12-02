@@ -22,8 +22,8 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class OrderController extends Controller {
 
-	private final OrderResourceHandler handler;
 	public final Logger.ALogger logger = Logger.of("v2.order.controller");
+	private final OrderResourceHandler handler;
 
 	@Inject
 	public OrderController(OrderResourceHandler handler) {
@@ -47,8 +47,15 @@ public class OrderController extends Controller {
 		);
 	}
 
+	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
 	public CompletionStage<Result> getOrderList(Http.Request request) {
-		return supplyAsync(() -> ok(Json.toJson(new ApiSuccess("Order list"))));
+		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
+		return handler.orderList().thenComposeAsync(
+				response -> {
+					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());
+					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));
+				}
+		);
 	}
 }
 

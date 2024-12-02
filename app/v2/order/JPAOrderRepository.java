@@ -6,6 +6,7 @@ import common.order.model.OrderOutletModel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import play.Logger;
 import play.db.jpa.JPAApi;
 
@@ -63,6 +64,14 @@ public class JPAOrderRepository implements OrderRepository {
 			}
 			return orderModel;
 		}), ec);
+	}
+
+	@Override
+	public CompletionStage<List<OrderModel>> getOrderList() {
+		return supplyAsync(() -> wrap(em -> {
+			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m", OrderModel.class);
+			return query.getResultList();
+		}));
 	}
 
 	private <T> T wrap(Function<EntityManager, T> function) {
