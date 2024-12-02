@@ -42,6 +42,7 @@ public class OrderResponseResource {
 		this.stationCode = model.getStationCode();
 		this.stationName = model.getStationName();
 		this.bookingDate = model.getBookingDate();
+		this.deliveryDate = model.getDeliveryDate();
 		this.coach = model.getCoach();
 		this.berth = model.getBerth();
 		this.pnr = model.getPnr();
