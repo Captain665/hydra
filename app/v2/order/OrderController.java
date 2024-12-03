@@ -7,6 +7,7 @@ import common.Authorization.PermissionBasedAuthorization;
 import common.customer.model.CustomerModel;
 import common.enums.PermissionType;
 import common.order.resources.OrderResource;
+import common.user.model.UserModel;
 import jakarta.inject.Inject;
 import play.Logger;
 import play.libs.Json;
@@ -50,6 +51,14 @@ public class OrderController extends Controller {
 	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
 	public CompletionStage<Result> getOrderList(Http.Request request) {
 		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
+		UserModel userModel = null;
+		CustomerModel customerModel = null;
+		String role = request.attrs().get(Attrs.ROLE);
+		if ("customer".equalsIgnoreCase(role)) {
+			customerModel = request.attrs().get(Attrs.CUSTOMER);
+		} else {
+			userModel = request.attrs().get(Attrs.USER);
+		}
 		return handler.orderList().thenComposeAsync(
 				response -> {
 					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());

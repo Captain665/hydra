@@ -54,7 +54,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 			Map<String, String> contains = JwtUtilities.decodeToken(token);
 			String userId = contains.get("id");
 			List<String> payload = Arrays.asList(contains.get("payload").split("="));
-			if (contains.get("payload").contains("role")) {
+			if (contains.get("payload").contains(String.valueOf(Attrs.ROLE))) {
 				String role = Arrays.asList(payload.get(1).split("}")).get(0);
 				if (userId == null) {
 					logger.info("[" + request.id() + "] " + "response: " + "Not able to verify user from auth token:");
@@ -86,7 +86,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 												return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
 											}
 											return delegate.call(request.addAttr(Attrs.CUSTOMER, customerModel.get())
-													.addAttr(TypedKey.create("role"), role));
+													.addAttr(Attrs.ROLE, role));
 										}
 
 								);
@@ -97,7 +97,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 											logger.error("[" + request.id() + "] " + "response: " + "Not able to determine user from auth token.");
 											return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
 										}
-										return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(TypedKey.create("role"), role));
+										return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(Attrs.ROLE, role));
 									}
 							);
 						}

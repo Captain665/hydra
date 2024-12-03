@@ -3,6 +3,7 @@ package v2.customer;
 import com.fasterxml.jackson.databind.JsonNode;
 import common.ApiResponse.ApiFailure;
 import common.ApiResponse.ApiSuccess;
+import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
 import common.customer.resources.CustomerResource;
 import common.enums.PermissionType;
