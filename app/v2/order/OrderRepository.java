@@ -3,7 +3,9 @@ package v2.order;
 import common.customer.model.CustomerModel;
 import common.order.model.OrderModel;
 
+import javax.swing.text.html.Option;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
 public interface OrderRepository {
@@ -12,6 +14,8 @@ public interface OrderRepository {
 	CompletionStage<List<OrderModel>> getOrderList();
 
 	CompletionStage<List<OrderModel>> getCustomerOrderList(CustomerModel model);
+
+	CompletionStage<Integer> count(CustomerModel model);
 
 
 }
