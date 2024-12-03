@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class UserResourceHandler {
-	private final Logger.ALogger logger = Logger.of("application.UserResourceHandler");
 	private final UserRepository repository;
 	private final RolePermissionsRepository permissionsRepository;
 

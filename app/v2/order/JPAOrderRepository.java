@@ -27,8 +27,6 @@ public class JPAOrderRepository implements OrderRepository {
 	private final JPAApi jpaApi;
 	private final OrderExecutionContext ec;
 
-	private final Logger.ALogger logger = Logger.of("order.repository");
-
 	@Inject
 	public JPAOrderRepository(JPAApi jpaApi, OrderExecutionContext ec) {
 		this.jpaApi = jpaApi;
@@ -42,8 +40,6 @@ public class JPAOrderRepository implements OrderRepository {
 
 			List<OrderItemModel> orderItems = model.getOrderItem();
 			OrderOutletModel orderOutlet = model.getOrderOutlet();
-
-			logger.info("subtotal amount is " + model.getSubTotal());
 
 			OrderModel orderModel = insert(em, model);
 
@@ -74,7 +70,7 @@ public class JPAOrderRepository implements OrderRepository {
 		return supplyAsync(() -> wrap(em -> {
 			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m", OrderModel.class);
 			return query.getResultList();
-		}));
+		}), ec);
 	}
 
 	@Override
@@ -82,7 +78,7 @@ public class JPAOrderRepository implements OrderRepository {
 		return supplyAsync(() -> wrap(em -> {
 			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.customer = :customer", OrderModel.class).setParameter("customer", model);
 			return query.getResultList();
-		}));
+		}), ec);
 	}
 
 	@Override
@@ -94,7 +90,7 @@ public class JPAOrderRepository implements OrderRepository {
 			}
 			Query query = em.createNativeQuery(queryString);
 			return ((Long) query.getSingleResult()).intValue();
-		}));
+		}), ec);
 	}
 
 	private <T> T wrap(Function<EntityManager, T> function) {

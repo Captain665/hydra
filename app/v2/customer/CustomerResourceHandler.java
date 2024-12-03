@@ -22,7 +22,6 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 public class CustomerResourceHandler {
 
 	private final CustomerRepository repository;
-	private final Logger.ALogger logger = Logger.of("application.CustomerController.CustomerResourceHandler");
 
 	@Inject
 	public CustomerResourceHandler(CustomerRepository repository) {

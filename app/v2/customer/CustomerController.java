@@ -56,7 +56,7 @@ public class CustomerController extends Controller {
 		);
 	}
 
-	@PermissionBasedAuthorization(PermissionType.CUSTOMER_LIST_READ)
+	@PermissionBasedAuthorization({PermissionType.CUSTOMER_LIST_READ})
 	public CompletionStage<Result> getCustomerList(Http.Request request) {
 		logger.info("[" + request.id() + "] " + "json " + Json.toJson(request));
 
@@ -65,9 +65,9 @@ public class CustomerController extends Controller {
 						customer -> {
 							CustomerResponseResource customerResponseResource;
 							customerResponseResource = new CustomerResponseResource(count, customer);
-							
+
 							if (customer.isEmpty()) {
-								logger.error("[" + request.id() + "] " + "response: " + "No result");
+								logger.error("[" + request.id() + "] " + "response ->  " + "No result");
 								return ok(Json.toJson(new ApiSuccess(customerResponseResource)));
 							}
 
@@ -89,11 +89,11 @@ public class CustomerController extends Controller {
 						payload.put("role", "CUSTOMER");
 						final String token = JwtUtilities.generateToken(details.get().id.toString(), payload);
 						details.get().setJwt(token);
-						return supplyAsync(() -> ok(Json.toJson(
-								new ApiSuccess(details))));
+						logger.info("[" + request.id() + "] " + "response: " + details.toString());
+						return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(details))));
 					}
-					return supplyAsync(() -> notFound(Json.toJson(
-							new ApiFailure("Customer not found"))));
+					logger.info("[" + request.id() + "] " + "response: " + "Customer not found");
+					return supplyAsync(() -> notFound(Json.toJson(new ApiFailure("Customer not found"))));
 				}
 		);
 	}
@@ -104,8 +104,10 @@ public class CustomerController extends Controller {
 		return handler.deleteById(id).thenComposeAsync(
 				model -> {
 					if (model.isPresent()) {
+						logger.info("[" + request.id() + "] " + "response: " + "DELETE successfully");
 						return supplyAsync(() -> ok(Json.toJson(new ApiSuccess("DELETE successfully"))));
 					}
+					logger.info("[" + request.id() + "] " + "response: " + "Customer not found");
 					return supplyAsync(() -> notFound(Json.toJson(new ApiFailure("customer not found"))));
 				});
 	}
