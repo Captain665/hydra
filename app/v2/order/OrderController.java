@@ -54,15 +54,18 @@ public class OrderController extends Controller {
 	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
 	public CompletionStage<Result> getOrderList(Http.Request request) {
 		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
-		UserModel userModel = null;
+		UserModel userModel;
 		CustomerModel customerModel;
 		String role = request.attrs().get(Attrs.ROLE);
 		if ("customer".equalsIgnoreCase(role)) {
 			customerModel = request.attrs().get(Attrs.CUSTOMER);
+			logger.info("[" + request.id() + "] " + "customerModel -> " + customerModel.toString());
 		} else {
 			customerModel = null;
 			userModel = request.attrs().get(Attrs.USER);
+			logger.info("[" + request.id() + "] " + "userModel -> " + userModel.toString());
 			if (userModel == null) {
+				logger.info("[" + request.id() + "] " + "response -> " + "Not able to determine user from auth token");
 				return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Not able to determine user from auth token"))));
 			}
 		}
@@ -71,6 +74,7 @@ public class OrderController extends Controller {
 						orders -> {
 							OrderListCountResponseResource orderListCountResponseResource;
 							orderListCountResponseResource = new OrderListCountResponseResource(count, orders);
+							logger.info("[" + request.id() + "] " + "response -> " + orderListCountResponseResource.toString());
 							return ok(Json.toJson(new ApiSuccess(orderListCountResponseResource)));
 						}
 				)

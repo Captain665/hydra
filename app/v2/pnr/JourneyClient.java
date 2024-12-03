@@ -18,7 +18,6 @@ public class JourneyClient {
 	private final AsyncHttpClient httpClient = asyncHttpClient(config().setRequestTimeout(Duration.ofSeconds(5000)));
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final Logger.ALogger logger = Logger.of("application.journeyClient");
-
 	private final String JOURNEY_URL = "https://stage-ecatering.ipsator.com/api/v1/pnr/vendor?pnr=";
 	private final String AUTHORIZATION = "e90221a5-9b45-4564-80a0-9ba49a97c13e";
 

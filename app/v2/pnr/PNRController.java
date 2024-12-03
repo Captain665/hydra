@@ -26,19 +26,18 @@ public class PNRController extends Controller {
 	public CompletionStage<Result> getPNRDetail(Http.Request request, Long pnr) {
 		logger.info("[" + request.id() + "] " + "json " + request);
 
-		return client.getJourneyInfoByPNR(pnr, request)
-				.thenComposeAsync(
-						optional -> optional.map(
-								pnrInfo -> {
-									if (!pnrInfo.message.isEmpty()) {
-										return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("PNR info not found"))));
-									}
-									logger.info("[" + request.id() + "] " + "response " + pnrInfo.result);
-									return CompletableFuture.completedFuture(ok(Json.toJson(new ApiSuccess(pnrInfo.result))));
-								}).orElseGet(() -> {
-									logger.error("[" + request.id() + "] " + "message " + "pnr info not found");
-									return CompletableFuture.completedFuture(notFound(Json.toJson(new ApiFailure("pnr info not found"))));
-								}
-						));
+		return client.getJourneyInfoByPNR(pnr, request).thenComposeAsync(
+				optional -> optional.map(
+						pnrInfo -> {
+							if (!pnrInfo.message.isEmpty()) {
+								return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("PNR info not found"))));
+							}
+							logger.info("[" + request.id() + "] " + "response " + pnrInfo.result);
+							return CompletableFuture.completedFuture(ok(Json.toJson(new ApiSuccess(pnrInfo.result))));
+						}).orElseGet(() -> {
+							logger.error("[" + request.id() + "] " + "message " + "pnr info not found");
+							return CompletableFuture.completedFuture(notFound(Json.toJson(new ApiFailure("pnr info not found"))));
+						}
+				));
 	}
 }

@@ -29,7 +29,6 @@ public class OrderResourceHandler {
 
 	}
 
-
 	public CompletionStage<OrderResponseResource> createOrder(OrderResource resource, CustomerModel customerModel) {
 		return repository.create(build(resource, customerModel)).thenComposeAsync(
 				model -> {

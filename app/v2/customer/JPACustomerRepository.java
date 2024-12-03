@@ -27,7 +27,6 @@ public class JPACustomerRepository implements CustomerRepository {
 
 	private final JPAApi jpaApi;
 	private final CustomerExecutionContext ce;
-	private final Logger.ALogger logger = Logger.of("application.CustomerController.JPACustomerRepository");
 
 
 	@Inject
@@ -50,7 +49,6 @@ public class JPACustomerRepository implements CustomerRepository {
 				model.setNewUser(false);
 				return em.merge(model);
 			} catch (NoResultException e) {
-				logger.info("new user is created " + model);
 				model.setActive(true);
 				model.setNewUser(true);
 				return em.merge(model);
@@ -86,7 +84,6 @@ public class JPACustomerRepository implements CustomerRepository {
 
 	@Override
 	public CompletionStage<Optional<Boolean>> deleteById(Long id) {
-		logger.info("run here .....");
 		return supplyAsync(() -> wrap(entityManager -> {
 					CustomerModel model = entityManager.find(CustomerModel.class, id);
 					if (model == null) {
