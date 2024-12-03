@@ -6,18 +6,16 @@ import common.order.model.OrderModel;
 import common.order.resources.OrderListResponseResource;
 import common.order.resources.OrderResource;
 import common.order.resources.OrderResponseResource;
-import common.user.model.UserModel;
 import jakarta.inject.Inject;
 import play.Logger;
-import v2.customer.CustomerRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 
-import static common.order.resources.OrderListResponseResource.mapOrderList;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class OrderResourceHandler {
@@ -43,20 +41,18 @@ public class OrderResourceHandler {
 
 	public CompletionStage<List<OrderListResponseResource>> orderList(CustomerModel customerModel) {
 		if (customerModel != null) {
-			return repository.getCustomerOrderList(customerModel).thenComposeAsync(
-					list -> {
-						List<OrderListResponseResource> customerOrderListResponse = mapOrderList(list);
-						return supplyAsync(() -> customerOrderListResponse);
-					}
-			);
-		} else {
-			return repository.getOrderList().thenComposeAsync(
-					model -> {
-						List<OrderListResponseResource> response = mapOrderList(model);
-						return supplyAsync(() -> response);
-					}
-			);
+			return repository.getCustomerOrderList(customerModel).thenApplyAsync(
+					list -> list.stream().map(OrderListResponseResource::new)
+							.collect(Collectors.toList()));
 		}
+
+		return repository.getOrderList().thenApplyAsync(
+				model -> model.stream().map(OrderListResponseResource::new)
+						.collect(Collectors.toList()));
+	}
+
+	public CompletionStage<Integer> countOrderList(CustomerModel model) {
+		return repository.count(model);
 	}
 
 	private OrderModel build(OrderResource resource, CustomerModel customerModel) {

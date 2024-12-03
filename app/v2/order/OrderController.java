@@ -7,6 +7,7 @@ import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
 import common.customer.model.CustomerModel;
 import common.enums.PermissionType;
+import common.order.resources.OrderListCountResponseResource;
 import common.order.resources.OrderResource;
 import common.user.model.UserModel;
 import jakarta.inject.Inject;
@@ -17,6 +18,7 @@ import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.With;
 
+import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
@@ -53,21 +55,25 @@ public class OrderController extends Controller {
 	public CompletionStage<Result> getOrderList(Http.Request request) {
 		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
 		UserModel userModel = null;
-		CustomerModel customerModel = null;
+		CustomerModel customerModel;
 		String role = request.attrs().get(Attrs.ROLE);
 		if ("customer".equalsIgnoreCase(role)) {
 			customerModel = request.attrs().get(Attrs.CUSTOMER);
 		} else {
+			customerModel = null;
 			userModel = request.attrs().get(Attrs.USER);
 			if (userModel == null) {
 				return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Not able to determine user from auth token"))));
 			}
 		}
-		return handler.orderList(customerModel).thenComposeAsync(
-				response -> {
-					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());
-					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));
-				}
+		return handler.countOrderList(customerModel).thenComposeAsync(
+				count -> handler.orderList(customerModel).thenApplyAsync(
+						orders -> {
+							OrderListCountResponseResource orderListCountResponseResource;
+							orderListCountResponseResource = new OrderListCountResponseResource(count, orders);
+							return ok(Json.toJson(new ApiSuccess(orderListCountResponseResource)));
+						}
+				)
 		);
 	}
 }

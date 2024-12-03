@@ -98,4 +98,18 @@ public class OrderItemResponseResource {
 	public void setVeg(Boolean veg) {
 		isVeg = veg;
 	}
+
+	@Override
+	public String toString() {
+		return "OrderItemResponseResource{" +
+				"id=" + id +
+				", quantity=" + quantity +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", basePrice=" + basePrice +
+				", tax=" + tax +
+				", sellingPrice=" + sellingPrice +
+				", isVeg=" + isVeg +
+				'}';
+	}
 }

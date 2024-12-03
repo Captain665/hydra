@@ -7,12 +7,14 @@ import common.order.model.OrderOutletModel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import play.Logger;
 import play.db.jpa.JPAApi;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -80,6 +82,18 @@ public class JPAOrderRepository implements OrderRepository {
 		return supplyAsync(() -> wrap(em -> {
 			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.customer = :customer", OrderModel.class).setParameter("customer", model);
 			return query.getResultList();
+		}));
+	}
+
+	@Override
+	public CompletionStage<Integer> count(CustomerModel model) {
+		return supplyAsync(() -> wrap(em -> {
+			String queryString = "Select count(*) from Orders o where true = true ";
+			if (model != null) {
+				queryString += "AND o.customer_id =" + model.getId();
+			}
+			Query query = em.createNativeQuery(queryString);
+			return ((Long) query.getSingleResult()).intValue();
 		}));
 	}
 

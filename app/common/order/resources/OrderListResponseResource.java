@@ -26,24 +26,19 @@ public class OrderListResponseResource {
 	public OrderListResponseResource() {
 	}
 
-
-	public static List<OrderListResponseResource> mapOrderList(List<OrderModel> model) {
-		return model.stream().map(orderResponse -> {
-			OrderListResponseResource resource = new OrderListResponseResource();
-			resource.setId(orderResponse.getId());
-			resource.setCustomerPayable(orderResponse.getCustomerPayable());
-			resource.setPaymentType(orderResponse.getPaymentType());
-			resource.setBookingDate(orderResponse.getBookingDate());
-			resource.setDeliveryDate(orderResponse.getDeliveryDate());
-			resource.setStationCode(orderResponse.getStationCode());
-			resource.setStationName(orderResponse.getStationName());
-			resource.setStatus(orderResponse.getOrderStatus());
-			resource.setOutletId(orderResponse.getOrderOutlet().getId());
-			resource.setOutletName(orderResponse.getOrderOutlet().getName());
-			resource.setOutletContact(orderResponse.getOrderOutlet().getContactNumber());
-			resource.setCustomerId(orderResponse.getCustomer().getId());
-			return resource;
-		}).collect(Collectors.toList());
+	public OrderListResponseResource(OrderModel model) {
+		this.setId(model.getId());
+		this.setCustomerPayable(model.getCustomerPayable());
+		this.setPaymentType(model.getPaymentType());
+		this.setBookingDate(model.getBookingDate());
+		this.setDeliveryDate(model.getDeliveryDate());
+		this.setStationCode(model.getStationCode());
+		this.setStationName(model.getStationName());
+		this.setStatus(model.getOrderStatus());
+		this.setOutletId(model.getOrderOutlet().getId());
+		this.setOutletName(model.getOrderOutlet().getName());
+		this.setOutletContact(model.getOrderOutlet().getContactNumber());
+		this.setCustomerId(model.getCustomer().getId());
 	}
 
 	public Long getId() {
@@ -140,5 +135,24 @@ public class OrderListResponseResource {
 
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
+	}
+
+
+	@Override
+	public String toString() {
+		return "OrderListResponseResource{" +
+				"id=" + id +
+				", customerPayable=" + customerPayable +
+				", paymentType=" + paymentType +
+				", bookingDate='" + bookingDate + '\'' +
+				", deliveryDate='" + deliveryDate + '\'' +
+				", stationCode='" + stationCode + '\'' +
+				", stationName='" + stationName + '\'' +
+				", status=" + status +
+				", outletId=" + outletId +
+				", outletName='" + outletName + '\'' +
+				", outletContact='" + outletContact + '\'' +
+				", customerId=" + customerId +
+				'}';
 	}
 }
