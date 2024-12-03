@@ -1,6 +1,7 @@
 package v2.order;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import common.ApiResponse.ApiFailure;
 import common.ApiResponse.ApiSuccess;
 import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
@@ -58,8 +59,11 @@ public class OrderController extends Controller {
 			customerModel = request.attrs().get(Attrs.CUSTOMER);
 		} else {
 			userModel = request.attrs().get(Attrs.USER);
+			if (userModel == null) {
+				return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Not able to determine user from auth token"))));
+			}
 		}
-		return handler.orderList(customerModel, userModel).thenComposeAsync(
+		return handler.orderList(customerModel).thenComposeAsync(
 				response -> {
 					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());
 					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));

@@ -41,7 +41,7 @@ public class OrderResourceHandler {
 		);
 	}
 
-	public CompletionStage<List<OrderListResponseResource>> orderList(CustomerModel customerModel, UserModel userModel) {
+	public CompletionStage<List<OrderListResponseResource>> orderList(CustomerModel customerModel) {
 		if (customerModel != null) {
 			return repository.getCustomerOrderList(customerModel).thenComposeAsync(
 					list -> {
