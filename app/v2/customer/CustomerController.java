@@ -6,6 +6,7 @@ import common.ApiResponse.ApiSuccess;
 import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
 import common.customer.resources.CustomerResource;
+import common.customer.resources.CustomerResponseResource;
 import common.enums.PermissionType;
 import jakarta.inject.Inject;
 import play.Logger;
@@ -58,15 +59,22 @@ public class CustomerController extends Controller {
 	@PermissionBasedAuthorization(PermissionType.CUSTOMER_LIST_READ)
 	public CompletionStage<Result> getCustomerList(Http.Request request) {
 		logger.info("[" + request.id() + "] " + "json " + Json.toJson(request));
-		return handler.getAllCustomerList().thenComposeAsync(
-				model -> {
-					if (model.isEmpty()) {
-						logger.error("[" + request.id() + "] " + "response: " + "No result");
-						return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(""))));
-					}
-					logger.info("[" + request.id() + "] " + "response: " + model.toString());
-					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(model))));
-				}
+
+		return handler.getCustomerCount().thenComposeAsync(
+				count -> handler.getAllCustomerList().thenApplyAsync(
+						customer -> {
+							CustomerResponseResource customerResponseResource;
+							customerResponseResource = new CustomerResponseResource(count, customer);
+							
+							if (customer.isEmpty()) {
+								logger.error("[" + request.id() + "] " + "response: " + "No result");
+								return ok(Json.toJson(new ApiSuccess(customerResponseResource)));
+							}
+
+							logger.info("[" + request.id() + "] " + "response: " + customerResponseResource.toString());
+							return ok(Json.toJson(new ApiSuccess(customerResponseResource)));
+						}
+				)
 		);
 	}
 

@@ -6,12 +6,14 @@ import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import play.Logger;
 import play.db.jpa.JPAApi;
 
 import javax.swing.text.html.Option;
 import java.lang.reflect.Type;
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
@@ -95,6 +97,14 @@ public class JPACustomerRepository implements CustomerRepository {
 
 				})
 		);
+	}
+
+	@Override
+	public CompletionStage<Integer> count() {
+		return supplyAsync(() -> wrap(em -> {
+			Query query = em.createNativeQuery("SELECT count(*) from Customers m where true = true");
+			return ((Long) query.getSingleResult()).intValue();
+		}));
 	}
 
 	private Optional<CustomerModel> details(EntityManager em, Long id) {
