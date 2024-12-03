@@ -78,5 +78,16 @@ public class CustomerListResponseResource {
 		this.newUser = newUser;
 	}
 
-
+	@Override
+	public String toString() {
+		return "CustomerListResponseResource{" +
+				"id=" + id +
+				", fullName='" + fullName + '\'' +
+				", mobile='" + mobile + '\'' +
+				", emailId='" + emailId + '\'' +
+				", active=" + active +
+				", gender=" + gender +
+				", newUser=" + newUser +
+				'}';
+	}
 }

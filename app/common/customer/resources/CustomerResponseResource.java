@@ -1,20 +1,17 @@
 package common.customer.resources;
 
-import scala.Int;
-
-import java.math.BigInteger;
 import java.util.List;
 
 public class CustomerResponseResource {
-	public Integer count;
+	public Integer customerCount;
 	public List<CustomerListResponseResource> customerList;
 
-	public Integer getCount() {
-		return count;
+	public Integer getCustomerCount() {
+		return customerCount;
 	}
 
-	public void setCount(Integer count) {
-		this.count = count;
+	public void setCustomerCount(Integer customerCount) {
+		this.customerCount = customerCount;
 	}
 
 	public List<CustomerListResponseResource> getCustomerList() {
@@ -25,11 +22,19 @@ public class CustomerResponseResource {
 		this.customerList = customerList;
 	}
 
-	public CustomerResponseResource(Integer count, List<CustomerListResponseResource> customerList) {
-		this.count = count;
+	public CustomerResponseResource(Integer customerCount, List<CustomerListResponseResource> customerList) {
+		this.customerCount = customerCount;
 		this.customerList = customerList;
 	}
 
 	public CustomerResponseResource() {
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerResponseResource{" +
+				"customerCount=" + customerCount +
+				", customerList=" + customerList +
+				'}';
 	}
 }

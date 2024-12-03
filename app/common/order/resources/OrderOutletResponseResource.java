@@ -91,4 +91,19 @@ public class OrderOutletResponseResource {
 		this.fssaiNo = model.getFssaiNumber();
 		this.contact = model.getContactNumber();
 	}
+
+
+	@Override
+	public String toString() {
+		return "OrderOutletResponseResource{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", address='" + address + '\'' +
+				", city='" + city + '\'' +
+				", state='" + state + '\'' +
+				", pinCode='" + pinCode + '\'' +
+				", fssaiNo='" + fssaiNo + '\'' +
+				", contact='" + contact + '\'' +
+				'}';
+	}
 }

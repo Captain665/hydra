@@ -141,4 +141,23 @@ public class OrderListResponseResource {
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
+
+
+	@Override
+	public String toString() {
+		return "OrderListResponseResource{" +
+				"id=" + id +
+				", customerPayable=" + customerPayable +
+				", paymentType=" + paymentType +
+				", bookingDate='" + bookingDate + '\'' +
+				", deliveryDate='" + deliveryDate + '\'' +
+				", stationCode='" + stationCode + '\'' +
+				", stationName='" + stationName + '\'' +
+				", status=" + status +
+				", outletId=" + outletId +
+				", outletName='" + outletName + '\'' +
+				", outletContact='" + outletContact + '\'' +
+				", customerId=" + customerId +
+				'}';
+	}
 }
