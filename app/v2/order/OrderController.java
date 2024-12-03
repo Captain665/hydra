@@ -53,7 +53,7 @@ public class OrderController extends Controller {
 
 	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
 	public CompletionStage<Result> getOrderList(Http.Request request) {
-		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
+		logger.info("[" + request.id() + "] " + " Json  " + request.body().asJson());
 		UserModel userModel;
 		CustomerModel customerModel;
 		String role = request.attrs().get(Attrs.ROLE);
