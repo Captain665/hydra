@@ -54,7 +54,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 			Map<String, String> contains = JwtUtilities.decodeToken(token);
 			String userId = contains.get("id");
 			List<String> payload = Arrays.asList(contains.get("payload").split("="));
-			if (contains.get("payload").contains(String.valueOf(Attrs.ROLE))) {
+			if (contains.get("payload").contains("role")) {
 				String role = Arrays.asList(payload.get(1).split("}")).get(0);
 				if (userId == null) {
 					logger.info("[" + request.id() + "] " + "response: " + "Not able to verify user from auth token:");
