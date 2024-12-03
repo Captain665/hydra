@@ -1,12 +1,14 @@
 package v2.order;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import common.ApiResponse.ApiFailure;
 import common.ApiResponse.ApiSuccess;
 import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
 import common.customer.model.CustomerModel;
 import common.enums.PermissionType;
 import common.order.resources.OrderResource;
+import common.user.model.UserModel;
 import jakarta.inject.Inject;
 import play.Logger;
 import play.libs.Json;
@@ -22,8 +24,8 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class OrderController extends Controller {
 
-	private final OrderResourceHandler handler;
 	public final Logger.ALogger logger = Logger.of("v2.order.controller");
+	private final OrderResourceHandler handler;
 
 	@Inject
 	public OrderController(OrderResourceHandler handler) {
@@ -47,8 +49,26 @@ public class OrderController extends Controller {
 		);
 	}
 
+	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
 	public CompletionStage<Result> getOrderList(Http.Request request) {
-		return supplyAsync(() -> ok(Json.toJson(new ApiSuccess("Order list"))));
+		logger.info("[" + request.id() + "] " + " Json + " + request.body().asJson());
+		UserModel userModel = null;
+		CustomerModel customerModel = null;
+		String role = request.attrs().get(Attrs.ROLE);
+		if ("customer".equalsIgnoreCase(role)) {
+			customerModel = request.attrs().get(Attrs.CUSTOMER);
+		} else {
+			userModel = request.attrs().get(Attrs.USER);
+			if (userModel == null) {
+				return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Not able to determine user from auth token"))));
+			}
+		}
+		return handler.orderList(customerModel).thenComposeAsync(
+				response -> {
+					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());
+					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));
+				}
+		);
 	}
 }
 

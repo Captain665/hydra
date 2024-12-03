@@ -9,6 +9,6 @@ public class Attrs {
 	public static final String AUTH_HEADER = "X-AUTH";
 	public static final TypedKey<UserModel> USER = TypedKey.create("user");
 	public static final TypedKey<CustomerModel> CUSTOMER = TypedKey.create("customer");
-
+	public static final TypedKey<String> ROLE = TypedKey.create("role");
 
 }

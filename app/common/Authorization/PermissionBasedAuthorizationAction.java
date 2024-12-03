@@ -86,7 +86,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 												return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not authorize to access this"))));
 											}
 											return delegate.call(request.addAttr(Attrs.CUSTOMER, customerModel.get())
-													.addAttr(TypedKey.create("role"), role));
+													.addAttr(Attrs.ROLE, role));
 										}
 
 								);
@@ -97,7 +97,7 @@ public class PermissionBasedAuthorizationAction extends Action<PermissionBasedAu
 											logger.error("[" + request.id() + "] " + "response: " + "Not able to determine user from auth token.");
 											return supplyAsync(() -> unauthorized(Json.toJson(new ApiUnAuthorize("Not able to determine user from auth token."))));
 										}
-										return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(TypedKey.create("role"), role));
+										return delegate.call(request.addAttr(Attrs.USER, userModel.get()).addAttr(Attrs.ROLE, role));
 									}
 							);
 						}
