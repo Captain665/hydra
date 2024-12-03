@@ -1,5 +1,6 @@
 package v2.order;
 
+import common.customer.model.CustomerModel;
 import common.order.model.OrderItemModel;
 import common.order.model.OrderModel;
 import common.order.model.OrderOutletModel;
@@ -70,6 +71,14 @@ public class JPAOrderRepository implements OrderRepository {
 	public CompletionStage<List<OrderModel>> getOrderList() {
 		return supplyAsync(() -> wrap(em -> {
 			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m", OrderModel.class);
+			return query.getResultList();
+		}));
+	}
+
+	@Override
+	public CompletionStage<List<OrderModel>> getCustomerOrderList(CustomerModel model) {
+		return supplyAsync(() -> wrap(em -> {
+			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.customer = :customer", OrderModel.class).setParameter("customer", model);
 			return query.getResultList();
 		}));
 	}

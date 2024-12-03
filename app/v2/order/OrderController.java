@@ -59,7 +59,7 @@ public class OrderController extends Controller {
 		} else {
 			userModel = request.attrs().get(Attrs.USER);
 		}
-		return handler.orderList().thenComposeAsync(
+		return handler.orderList(customerModel, userModel).thenComposeAsync(
 				response -> {
 					logger.info("[" + request.id() + "] " + "Json -> " + response.toString());
 					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(response))));
