@@ -20,7 +20,7 @@ public class JwtUtilities {
 	private static final Logger.ALogger logger = Logger.of("common.JwtUtilities");
 
 	public static String generateToken(final String id, final Map<String, String> payload) {
-		logger.info("id " + id + " payload " + payload);
+		logger.info("generating token for user_id -> " + id + " payload -> " + payload);
 		long AUTH_TOKEN_EXPIRATION = 60 * 60 * 1000;
 		final long token = AUTH_TOKEN_EXPIRATION + System.currentTimeMillis();
 		JwtBuilder builder = Jwts.builder().
@@ -28,12 +28,10 @@ public class JwtUtilities {
 				subject(payload.toString()).
 				expiration(new Date(token))
 				.signWith(key, JWT_SIGNATURE_ALGO);
-		logger.info("token is generated " + token);
 		return builder.compact();
 	}
 
 	public static Map<String, String> decodeToken(final String jwt) throws AuthenticationException {
-		logger.info("decode token " + jwt);
 		if (StringUtils.isNullOrEmpty(jwt)) {
 			throw new AuthenticationException("Invalid Token");
 		}
