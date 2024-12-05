@@ -1,5 +1,6 @@
 package v2.order;
 
+import com.mysql.cj.log.Log;
 import common.customer.model.CustomerModel;
 import common.order.model.OrderItemModel;
 import common.order.model.OrderModel;
@@ -7,10 +8,12 @@ import common.order.model.OrderOutletModel;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import play.Logger;
 import play.db.jpa.JPAApi;
+import play.libs.Json;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,7 +35,6 @@ public class JPAOrderRepository implements OrderRepository {
 		this.jpaApi = jpaApi;
 		this.ec = ec;
 	}
-
 
 	@Override
 	public CompletionStage<OrderModel> create(OrderModel model) {
@@ -91,6 +93,18 @@ public class JPAOrderRepository implements OrderRepository {
 			Query query = em.createNativeQuery(queryString);
 			return ((Long) query.getSingleResult()).intValue();
 		}), ec);
+	}
+
+	@Override
+	public CompletionStage<Optional<OrderModel>> getOrderDetailById(Long id) {
+		return supplyAsync(() -> wrap(em -> {
+			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.id = :id", OrderModel.class).setParameter("id", id);
+			try {
+				return Optional.of(query.getSingleResult());
+			} catch (NoResultException e) {
+				return Optional.empty();
+			}
+		}));
 	}
 
 	private <T> T wrap(Function<EntityManager, T> function) {

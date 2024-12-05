@@ -15,24 +15,20 @@ public class OrderItemResponseResource {
 	public BigDecimal basePrice;
 	public BigDecimal tax;
 	public BigDecimal sellingPrice;
-	public Boolean isVeg;
+	public Boolean veg;
 
 	public OrderItemResponseResource() {
 	}
 
-	public static List<OrderItemResponseResource> mapOrderItem(List<OrderItemModel> orderItem) {
-		return orderItem.stream().map(model -> {
-			OrderItemResponseResource orderItemResponseResource = new OrderItemResponseResource();
-			orderItemResponseResource.setId(model.getId());
-			orderItemResponseResource.setName(model.getName());
-			orderItemResponseResource.setDescription(model.getDescription());
-			orderItemResponseResource.setBasePrice(model.getBasePrice());
-			orderItemResponseResource.setQuantity(model.getQuantity());
-			orderItemResponseResource.setTax(model.getTax());
-			orderItemResponseResource.setSellingPrice(model.getSellingPrice());
-			orderItemResponseResource.setVeg(model.getVeg());
-			return orderItemResponseResource;
-		}).collect(Collectors.toList());
+	public OrderItemResponseResource(OrderItemModel model) {
+		this.id = model.getId();
+		this.quantity = model.getQuantity();
+		this.name = model.getName();
+		this.description = model.getDescription();
+		this.basePrice = model.getBasePrice();
+		this.tax = model.getTax();
+		this.sellingPrice = model.getSellingPrice();
+		this.veg = model.getVeg();
 	}
 
 	public Long getId() {
@@ -92,11 +88,11 @@ public class OrderItemResponseResource {
 	}
 
 	public Boolean getVeg() {
-		return isVeg;
+		return veg;
 	}
 
 	public void setVeg(Boolean veg) {
-		isVeg = veg;
+		this.veg = veg;
 	}
 
 	@Override
@@ -109,7 +105,7 @@ public class OrderItemResponseResource {
 				", basePrice=" + basePrice +
 				", tax=" + tax +
 				", sellingPrice=" + sellingPrice +
-				", isVeg=" + isVeg +
+				", veg=" + veg +
 				'}';
 	}
 }

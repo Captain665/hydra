@@ -17,5 +17,6 @@ public interface OrderRepository {
 
 	CompletionStage<Integer> count(CustomerModel model);
 
+	CompletionStage<Optional<OrderModel>> getOrderDetailById(Long id);
 
 }

@@ -140,4 +140,18 @@ public class OrderOutletModel extends BaseModel {
 		this.pinCode = pinCode;
 	}
 
+	@Override
+	public String toString() {
+		return "OrderOutletModel{" +
+				"name='" + name + '\'' +
+				", address='" + address + '\'' +
+				", city='" + city + '\'' +
+				", state='" + state + '\'' +
+				", fssaiNumber='" + fssaiNumber + '\'' +
+				", fssaiCutOffDate=" + fssaiCutOffDate +
+				", gstNumber='" + gstNumber + '\'' +
+				", contactNumber='" + contactNumber + '\'' +
+				", pinCode='" + pinCode + '\'' +
+				'}';
+	}
 }

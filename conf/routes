@@ -10,7 +10,7 @@ GET     /health                     controllers.HomeController.health()
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 POST    /v2/customer                v2.customer.CustomerController.create(request: Request)
-GET     /v2/customer/list            v2.customer.CustomerController.getCustomerList(request: Request)
+GET     /v2/customer/list           v2.customer.CustomerController.getCustomerList(request: Request)
 GET     /v2/customer/:id            v2.customer.CustomerController.get(request: Request, id: Long)
 DELETE  /v2/customer/:id            v2.customer.CustomerController.delete(request: Request, id: Long)
 
@@ -19,4 +19,5 @@ POST    /v2/user/login              v2.user.UserController.login(request: Reques
 GET     /v2/pnr/:pnr                v2.pnr.PNRController.getPNRDetail(request: Request, pnr: Long)
 
 POST    /v2/order/create            v2.order.OrderController.create(request: Request)
-GET    /v2/order/list               v2.order.OrderController.getOrderList(request: Request)
+GET     /v2/order/list              v2.order.OrderController.getOrderList(request: Request)
+GET     /v2/order/:id               v2.order.OrderController.getOrderDetails(request: Request, id: Long)

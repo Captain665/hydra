@@ -114,4 +114,16 @@ public class OrderItemModel extends BaseModel {
 		this.sellingPrice = sellingPrice;
 	}
 
+	@Override
+	public String toString() {
+		return "OrderItemModel{" +
+				"quantity=" + quantity +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", isVeg=" + isVeg +
+				", basePrice=" + basePrice +
+				", tax=" + tax +
+				", sellingPrice=" + sellingPrice +
+				'}';
+	}
 }

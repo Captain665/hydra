@@ -8,10 +8,12 @@ import common.order.resources.OrderResource;
 import common.order.resources.OrderResponseResource;
 import jakarta.inject.Inject;
 import play.Logger;
+import play.api.libs.json.Json;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 
@@ -21,12 +23,10 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 public class OrderResourceHandler {
 
 	private final OrderRepository repository;
-	private final Logger.ALogger logger = Logger.of("v2.order.OrderController.OrderResourceHandler");
 
 	@Inject
 	public OrderResourceHandler(OrderRepository repository) {
 		this.repository = repository;
-
 	}
 
 	public CompletionStage<OrderResponseResource> createOrder(OrderResource resource, CustomerModel customerModel) {
@@ -44,7 +44,6 @@ public class OrderResourceHandler {
 					list -> list.stream().map(OrderListResponseResource::new)
 							.collect(Collectors.toList()));
 		}
-
 		return repository.getOrderList().thenApplyAsync(
 				model -> model.stream().map(OrderListResponseResource::new)
 						.collect(Collectors.toList()));
@@ -52,6 +51,13 @@ public class OrderResourceHandler {
 
 	public CompletionStage<Integer> countOrderList(CustomerModel model) {
 		return repository.count(model);
+	}
+
+	public CompletionStage<Optional<OrderResponseResource>> orderDetail(Long id) {
+		return repository.getOrderDetailById(id).thenApplyAsync(
+				model ->
+						model.map(OrderResponseResource::new)
+		);
 	}
 
 	private OrderModel build(OrderResource resource, CustomerModel customerModel) {

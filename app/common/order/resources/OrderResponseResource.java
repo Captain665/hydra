@@ -1,13 +1,14 @@
 package common.order.resources;
 
+import common.customer.model.CustomerModel;
 import common.enums.OrderStatus;
 import common.enums.PaymentType;
 import common.order.model.OrderModel;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static common.order.resources.OrderItemResponseResource.mapOrderItem;
 
 public class OrderResponseResource {
 	public Long id;
@@ -29,6 +30,7 @@ public class OrderResponseResource {
 	public BigDecimal customerPayable;
 	public String orderFrom;
 	public OrderStatus orderStatus;
+	public Long customerId;
 	public List<OrderItemResponseResource> orderItem;
 	public OrderOutletResponseResource orderOutlet;
 
@@ -55,7 +57,8 @@ public class OrderResponseResource {
 		this.deliveryCharge = model.getDeliveryCharge();
 		this.discount = model.getDiscount();
 		this.customerPayable = model.getCustomerPayable();
-		this.orderItem = mapOrderItem(model.getOrderItem());
+		this.customerId = model.getCustomer().getId();
+		this.orderItem = model.getOrderItem().stream().map(OrderItemResponseResource::new).collect(Collectors.toList());
 		this.orderOutlet = new OrderOutletResponseResource(model.getOrderOutlet());
 	}
 
@@ -227,6 +230,13 @@ public class OrderResponseResource {
 		this.orderOutlet = orderOutlet;
 	}
 
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
 
 	@Override
 	public String toString() {
