@@ -30,7 +30,7 @@ public class OrderOutletModel extends BaseModel {
 	private String contactNumber;
 	@Column(name = "pin_code")
 	private String pinCode;
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name = "order_id")
 	@JsonBackReference
 	private OrderModel order;
