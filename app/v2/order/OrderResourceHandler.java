@@ -89,6 +89,7 @@ public class OrderResourceHandler {
 				.setCustomerId(customerModel)
 				.setOrderOutlet(resource.getOrderOutlet())
 				.setOrderItem(resource.getOrderItem())
+				.setCreatedBy(customerModel != null ? "customer" : "admin")
 				.build();
 	}
 
