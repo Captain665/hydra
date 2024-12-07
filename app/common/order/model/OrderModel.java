@@ -55,7 +55,7 @@ public class OrderModel extends BaseModel {
 	@OneToMany(targetEntity = OrderItemModel.class, fetch = FetchType.EAGER, mappedBy = "order")
 	@JsonManagedReference
 	private List<OrderItemModel> orderItem;
-	@OneToOne(targetEntity = OrderOutletModel.class, fetch = FetchType.EAGER)
+	@OneToOne(targetEntity = OrderOutletModel.class, fetch = FetchType.EAGER, mappedBy = "order")
 	@JsonManagedReference
 	private OrderOutletModel orderOutlet;
 
@@ -83,7 +83,8 @@ public class OrderModel extends BaseModel {
 					  String orderFrom,
 					  OrderStatus orderStatus,
 					  List<OrderItemModel> orderItem,
-					  OrderOutletModel orderOutlet) {
+					  OrderOutletModel orderOutlet,
+					  String createdBy) {
 		this.trainNo = trainNo;
 		this.trainName = trainName;
 		this.stationCode = stationCode;
@@ -105,6 +106,7 @@ public class OrderModel extends BaseModel {
 		this.orderStatus = orderStatus;
 		this.orderItem = orderItem;
 		this.orderOutlet = orderOutlet;
+		this.createdBy = createdBy;
 	}
 
 	public String getTrainNo() {
