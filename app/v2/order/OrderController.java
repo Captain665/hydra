@@ -10,6 +10,7 @@ import common.customer.model.CustomerModel;
 import common.enums.PermissionType;
 import common.order.resources.OrderListCountResponseResource;
 import common.order.resources.OrderResource;
+import common.order.resources.OrderSearchResource;
 import common.user.model.UserModel;
 import jakarta.inject.Inject;
 import play.Logger;
@@ -54,8 +55,8 @@ public class OrderController extends Controller {
 	}
 
 	@PermissionBasedAuthorization({PermissionType.ORDER_LIST_READ, PermissionType.ORDER_CREATE})
-	public CompletionStage<Result> getOrderList(Http.Request request) {
-		logger.info("[" + request.id() + "] " + " Json  " + request.body().asJson());
+	public CompletionStage<Result> getOrderList(OrderSearchResource resource, Http.Request request) {
+		logger.info("[" + request.id() + "] " + " resource " + resource.toString());
 		UserModel userModel;
 		CustomerModel customerModel;
 		String role = request.attrs().get(Attrs.ROLE);
@@ -72,7 +73,7 @@ public class OrderController extends Controller {
 			}
 		}
 		return handler.countOrderList(customerModel).thenComposeAsync(
-				count -> handler.orderList(customerModel).thenApplyAsync(
+				count -> handler.orderList(customerModel, resource).thenApplyAsync(
 						orders -> {
 							OrderListCountResponseResource orderListCountResponseResource;
 							orderListCountResponseResource = new OrderListCountResponseResource(count, orders);

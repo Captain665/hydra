@@ -1,19 +1,17 @@
 package v2.order;
 
-import com.mysql.cj.log.Log;
 import common.customer.model.CustomerModel;
 import common.order.model.OrderItemModel;
 import common.order.model.OrderModel;
 import common.order.model.OrderOutletModel;
+import common.order.resources.OrderSearchResource;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
-import play.Logger;
 import play.db.jpa.JPAApi;
-import play.libs.Json;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -68,17 +66,25 @@ public class JPAOrderRepository implements OrderRepository {
 	}
 
 	@Override
-	public CompletionStage<List<OrderModel>> getOrderList() {
+	public CompletionStage<List<OrderModel>> getOrderList(OrderSearchResource searchResource) {
 		return supplyAsync(() -> wrap(em -> {
-			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m", OrderModel.class);
+			int offSet = (searchResource.page - 1) * searchResource.size;
+			Query query = em.createNativeQuery("SELECT * from Orders o " +
+							"Limit " + offSet + " , " + searchResource.size,
+					OrderModel.class);
 			return query.getResultList();
 		}), ec);
 	}
 
 	@Override
-	public CompletionStage<List<OrderModel>> getCustomerOrderList(CustomerModel model) {
+	public CompletionStage<List<OrderModel>> getCustomerOrderList(CustomerModel model, OrderSearchResource searchResource) {
 		return supplyAsync(() -> wrap(em -> {
-			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.customer = :customer", OrderModel.class).setParameter("customer", model);
+			int offSet = (searchResource.page - 1) * searchResource.size;
+			Long customerId = model.getId();
+			Query query = em.createNativeQuery("SELECT * from Orders o " +
+							"where o.customer_id = " + customerId +
+							" Limit " + offSet + " , " + searchResource.size,
+					OrderModel.class);
 			return query.getResultList();
 		}), ec);
 	}
