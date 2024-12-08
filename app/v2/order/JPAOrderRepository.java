@@ -69,7 +69,7 @@ public class JPAOrderRepository implements OrderRepository {
 	public CompletionStage<List<OrderModel>> getOrderList(OrderSearchResource searchResource) {
 		return supplyAsync(() -> wrap(em -> {
 			int offSet = (searchResource.page - 1) * searchResource.size;
-			Query query = em.createNativeQuery("SELECT * FROM Orders o " +
+			Query query = em.createNativeQuery("SELECT * from Orders o " +
 							"Limit " + offSet + " , " + searchResource.size,
 					OrderModel.class);
 			return query.getResultList();
@@ -79,7 +79,12 @@ public class JPAOrderRepository implements OrderRepository {
 	@Override
 	public CompletionStage<List<OrderModel>> getCustomerOrderList(CustomerModel model, OrderSearchResource searchResource) {
 		return supplyAsync(() -> wrap(em -> {
-			TypedQuery<OrderModel> query = em.createQuery("SELECT m from OrderModel m where m.customer = :customer", OrderModel.class).setParameter("customer", model);
+			int offSet = (searchResource.page - 1) * searchResource.size;
+			Long customerId = model.getId();
+			Query query = em.createNativeQuery("SELECT * from Orders o " +
+							"where o.customer_id = " + customerId +
+							" Limit " + offSet + " , " + searchResource.size,
+					OrderModel.class);
 			return query.getResultList();
 		}), ec);
 	}
