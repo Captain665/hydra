@@ -6,6 +6,7 @@ import common.order.model.OrderModel;
 import common.order.resources.OrderListResponseResource;
 import common.order.resources.OrderResource;
 import common.order.resources.OrderResponseResource;
+import common.order.resources.OrderSearchResource;
 import jakarta.inject.Inject;
 import play.Logger;
 import play.api.libs.json.Json;
@@ -38,13 +39,13 @@ public class OrderResourceHandler {
 		);
 	}
 
-	public CompletionStage<List<OrderListResponseResource>> orderList(CustomerModel customerModel) {
+	public CompletionStage<List<OrderListResponseResource>> orderList(CustomerModel customerModel, OrderSearchResource searchResource) {
 		if (customerModel != null) {
-			return repository.getCustomerOrderList(customerModel).thenApplyAsync(
+			return repository.getCustomerOrderList(customerModel, searchResource).thenApplyAsync(
 					list -> list.stream().map(OrderListResponseResource::new)
 							.collect(Collectors.toList()));
 		}
-		return repository.getOrderList().thenApplyAsync(
+		return repository.getOrderList(searchResource).thenApplyAsync(
 				model -> model.stream().map(OrderListResponseResource::new)
 						.collect(Collectors.toList()));
 	}
