@@ -48,6 +48,9 @@ libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.17.0"
 // https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client
 libraryDependencies += "org.asynchttpclient" % "async-http-client" % "3.0.0"
 
+// https://mvnrepository.com/artifact/org.redisson/redisson
+libraryDependencies += "org.redisson" % "redisson" % "3.40.1"
+
 
 
 
