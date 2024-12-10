@@ -95,6 +95,7 @@ public class UserResource {
 		this.role = model.getRole();
 		this.active = model.active;
 		this.password = model.getPassword();
+		this.jwtToken = null;
 	}
 
 	public UserResource() {
@@ -111,7 +112,7 @@ public class UserResource {
 				", role='" + role + '\'' +
 				", permissions=" + permissions +
 				", active=" + active +
+				", jwtToken='" + jwtToken + '\'' +
 				'}';
 	}
-
 }

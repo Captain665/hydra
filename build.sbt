@@ -48,22 +48,11 @@ libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.17.0"
 // https://mvnrepository.com/artifact/org.asynchttpclient/async-http-client
 libraryDependencies += "org.asynchttpclient" % "async-http-client" % "3.0.0"
 
+libraryDependencies += "org.redisson" % "redisson" % "3.21.0"
 
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.14.3"
 
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.14.3"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % "2.14.3"
 
