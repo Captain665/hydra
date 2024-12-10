@@ -1,5 +1,6 @@
 package utilities;
 
+import common.user.resources.UserResource;
 import org.redisson.api.RBucket;
 import org.redisson.api.RedissonClient;
 import play.Logger;
@@ -12,16 +13,17 @@ public class RedisService {
 
 
 	public RedisService() {
-		this.redissonClient = RedisClientUtilities.getClient();
+		this.redissonClient = RedisHelper.getClient();
 	}
 
-	public void setClient(String key, String value) {
-		RBucket<String> bucket = redissonClient.getBucket(key);
+	public void setClient(String key, UserResource value) {
+		RBucket<UserResource> bucket = redissonClient.getBucket(key);
 		bucket.set(value, 5, TimeUnit.MINUTES);
 	}
 
-	public String getClient(String key) {
-		RBucket<String> bucket = redissonClient.getBucket(key);
+	public UserResource getClient(String key) {
+		RBucket<UserResource> bucket = redissonClient.getBucket(key);
+		logger.info("redis data " + bucket.get());
 		return bucket.get();
 	}
 }

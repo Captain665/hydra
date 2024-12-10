@@ -7,16 +7,16 @@ import play.Logger;
 
 import java.io.IOException;
 
-public class RedisClientUtilities {
+public class RedisHelper {
 	private final static Logger.ALogger logger = Logger.of("redisClientUtility");
 	private static RedissonClient redissonClient;
 
 	public static RedissonClient getClient() {
 		if (redissonClient == null) {
-			synchronized (RedisClientUtilities.class) {
+			synchronized (RedisHelper.class) {
 				if (redissonClient == null) {
 					try {
-						Config config = Config.fromYAML(RedisClientUtilities.class.getClassLoader().getResource("redisson.yaml"));
+						Config config = Config.fromYAML(RedisHelper.class.getClassLoader().getResource("redisson.yaml"));
 						redissonClient = Redisson.create(config);
 						logger.info("Redisson client initialized successfully");
 					} catch (IOException e) {
