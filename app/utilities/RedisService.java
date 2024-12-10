@@ -16,15 +16,12 @@ public class RedisService {
 	}
 
 	public void setClient(String key, String value) {
-		logger.info("redis value updating for " + key + " : " + value);
 		RBucket<String> bucket = redissonClient.getBucket(key);
 		bucket.set(value, 5, TimeUnit.MINUTES);
 	}
 
 	public String getClient(String key) {
-		logger.info("redis value getting for " + key);
 		RBucket<String> bucket = redissonClient.getBucket(key);
-		logger.info("redis response is " + bucket.get());
 		return bucket.get();
 	}
 }

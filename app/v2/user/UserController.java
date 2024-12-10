@@ -42,6 +42,7 @@ public class UserController extends Controller {
 		String value = redisService.getClient("user-" + userResource.mobile + ":" + userResource.password);
 		if (value != null) {
 			try {
+				logger.info("found redis data ");
 				RedisSerialize<UserResource> serialize = new RedisSerialize<>(UserResource.class);
 				UserResource resource = serialize.deserialize(value);
 				return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(resource))));
@@ -62,7 +63,6 @@ public class UserController extends Controller {
 					user.setJwtToken(token);
 					logger.info("[" + request.id() + "] " + "Response: " + user);
 					redisService.setClient("user-" + userResource.mobile + ":" + userResource.password, String.valueOf(user));
-					logger.info(" value for redis saving -> user-" + userResource.mobile + ":" + userResource.password + user);
 					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(user))));
 				}
 		);
