@@ -22,10 +22,10 @@ public class UserController extends Controller {
 	private final Logger.ALogger logger = Logger.of("application.UserController");
 	private final UserResourceHandler handler;
 
-	private final RedisService redisService;
+	private final RedisService<UserResource> redisService;
 
 	@Inject
-	public UserController(UserResourceHandler handler, RedisService redisService) {
+	public UserController(UserResourceHandler handler, RedisService<UserResource> redisService) {
 		this.handler = handler;
 		this.redisService = redisService;
 	}
