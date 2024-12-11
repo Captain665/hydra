@@ -2,36 +2,42 @@ package v2.user;
 
 import common.ApiResponse.ApiFailure;
 import common.ApiResponse.ApiSuccess;
-import common.Attrs;
 import common.user.resources.UserResource;
 import jakarta.inject.Inject;
-import org.w3c.dom.Attr;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import utilities.JwtUtilities;
+import utilities.RedisService;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
-import static play.mvc.Results.ok;
 
 public class UserController extends Controller {
 	private final Logger.ALogger logger = Logger.of("application.UserController");
 	private final UserResourceHandler handler;
 
+	private final RedisService<UserResource> redisService;
+
 	@Inject
-	public UserController(UserResourceHandler handler) {
+	public UserController(UserResourceHandler handler, RedisService<UserResource> redisService) {
 		this.handler = handler;
+		this.redisService = redisService;
 	}
 
 	public CompletionStage<Result> login(Http.Request request) {
 		UserResource userResource = Json.fromJson(request.body().asJson(), UserResource.class);
 		logger.info("[" + request.id() + "] " + "json " + userResource);
+		UserResource bucketValue = redisService.getClient("user_" + userResource.mobile + "_" + userResource.password);
+		if (bucketValue != null) {
+			logger.info("Redis data found");
+			return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(bucketValue))));
+		}
 		return handler.findByUserNamePassword(userResource.mobile, userResource.getPassword()).thenComposeAsync(
 				optional -> {
 					if (optional.isEmpty()) {
@@ -44,6 +50,7 @@ public class UserController extends Controller {
 					final String token = JwtUtilities.generateToken(user.getId().toString(), payload);
 					user.setJwtToken(token);
 					logger.info("[" + request.id() + "] " + "Response: " + user);
+					redisService.setClient("user_" + userResource.mobile + "_" + userResource.password, user);
 					return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(user))));
 				}
 		);
