@@ -35,7 +35,6 @@ public class UserController extends Controller {
 		logger.info("[" + request.id() + "] " + "json " + userResource);
 		UserResource bucketValue = redisService.getClient("user_" + userResource.mobile + "_" + userResource.password);
 		if (bucketValue != null) {
-			logger.info("Redis data found");
 			return supplyAsync(() -> ok(Json.toJson(new ApiSuccess(bucketValue))));
 		}
 		return handler.findByUserNamePassword(userResource.mobile, userResource.getPassword()).thenComposeAsync(
