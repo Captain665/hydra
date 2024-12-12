@@ -15,6 +15,32 @@ public class UserResource {
 	public String password;
 	public String jwtToken;
 
+	public UserResource(UserModel model) {
+		this.id = model.getId();
+		this.mobile = model.getMobile();
+		this.fullName = model.getFull_name();
+		this.emailId = model.email_id;
+		this.role = model.getRole();
+		this.active = model.active;
+		this.password = model.getPassword();
+		this.jwtToken = null;
+	}
+
+	public UserResource() {
+
+	}
+
+	public UserResource(Long id, String mobile, String fullName, String emailId, String role, List<String> permissions, boolean active, String jwtToken) {
+		this.id = id;
+		this.mobile = mobile;
+		this.fullName = fullName;
+		this.emailId = emailId;
+		this.role = role;
+		this.permissions = permissions;
+		this.active = active;
+		this.jwtToken = jwtToken;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -87,20 +113,6 @@ public class UserResource {
 		this.jwtToken = jwtToken;
 	}
 
-	public UserResource(UserModel model) {
-		this.id = model.getId();
-		this.mobile = model.getMobile();
-		this.fullName = model.getFull_name();
-		this.emailId = model.email_id;
-		this.role = model.getRole();
-		this.active = model.active;
-		this.password = model.getPassword();
-	}
-
-	public UserResource() {
-
-	}
-
 	@Override
 	public String toString() {
 		return "UserResource{" +
@@ -111,7 +123,7 @@ public class UserResource {
 				", role='" + role + '\'' +
 				", permissions=" + permissions +
 				", active=" + active +
+				", jwtToken='" + jwtToken + '\'' +
 				'}';
 	}
-
 }
