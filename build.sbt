@@ -13,8 +13,11 @@ PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-IN
 
 libraryDependencies += javaJpa
 
-// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.1.Final"
+//// https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
+libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.3.Final"
+//
+//// https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations
+libraryDependencies += "org.hibernate" % "hibernate-annotations" % "3.5.6-Final"
 
 // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 libraryDependencies += "com.mysql" % "mysql-connector-j" % "9.1.0"
@@ -24,8 +27,6 @@ libraryDependencies += "jakarta.persistence" % "jakarta.persistence-api" % "3.2.
 
 // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
 libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.24.1"
-
-libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final"
 
 // https://mvnrepository.com/artifact/org.playframework/play-java-jpa
 libraryDependencies += "org.playframework" %% "play-java-jpa" % "3.0.5"
@@ -55,4 +56,15 @@ libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.14
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.14.3"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % "2.14.3"
+
+//libraryDependencies += "jakarta.validation" % "jakarta.validation-api" % "3.1.0
+//
+//libraryDependencies += "org.hibernate.validator" % "hibernate-validator" % "7.0.2.Final"
+
+//// https://mvnrepository.com/artifact/jakarta.el/jakarta.el-api
+//libraryDependencies += "jakarta.el" % "jakarta.el-api" % "6.0.1"
+
+
+
+
 

@@ -2,7 +2,6 @@ package controllers;
 
 import common.ApiResponse.ApiFailure;
 import play.Logger;
-import play.http.DefaultHttpErrorHandler;
 import play.http.HttpErrorHandler;
 import play.libs.Json;
 import play.mvc.*;

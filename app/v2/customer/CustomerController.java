@@ -3,7 +3,6 @@ package v2.customer;
 import com.fasterxml.jackson.databind.JsonNode;
 import common.ApiResponse.ApiFailure;
 import common.ApiResponse.ApiSuccess;
-import common.Attrs;
 import common.Authorization.PermissionBasedAuthorization;
 import common.customer.resources.CustomerResource;
 import common.customer.resources.CustomerResponseResource;
@@ -16,12 +15,8 @@ import play.mvc.Http;
 import play.mvc.Result;
 import utilities.JwtUtilities;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
@@ -37,7 +32,7 @@ public class CustomerController extends Controller {
 		this.handler = handler;
 	}
 
-	public CompletionStage<Result> create(@Valid Http.Request request) {
+	public CompletionStage<Result> create(Http.Request request) {
 		JsonNode json = request.body().asJson();
 		logger.info("[" + request.id() + "] " + "json " + json.toString());
 		CustomerResource resource = Json.fromJson(json, CustomerResource.class);

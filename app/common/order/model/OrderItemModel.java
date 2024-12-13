@@ -1,14 +1,11 @@
 package common.order.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.mysql.cj.xdevapi.JsonString;
 import common.base.BaseModel;
 import jakarta.persistence.*;
-import org.hibernate.annotations.TypeDef;
 
 import java.math.BigDecimal;
 
-//@TypeDef(name = "json", typeClass = JsonString.class)
 @Entity
 @Table(name = "order_items")
 public class OrderItemModel extends BaseModel {

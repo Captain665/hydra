@@ -3,24 +3,23 @@ package common.customer.resources;
 import common.customer.model.CustomerModel;
 import common.enums.Gender;
 
-import javax.validation.constraints.*;
 
 public class CustomerResource {
 	public Long id;
-	@NotBlank(message = "customer name cannot be blank")
-	@Pattern(regexp = "([A-Z a-z])", message = "regex failed")
+	//	@NotBlank(message = "Customer name cannot be blank")
+//	@Pattern(regexp = "^[A-Za-z]+$", message = "Invalid name format")
 	public String fullName;
-	@NotBlank(message = "customer mobile cannot be blank")
-	@Size(min = 10, max = 10, message = "mobile number should be 10 digits")
-	@Pattern(regexp = "([0-9]{10})", message = "regex failed")
+	//	@NotBlank(message = "Customer mobile cannot be blank")
+//	@Size(min = 10, max = 10, message = "Mobile number should be 10 digits")
+//	@Pattern(regexp = "^[0-9]{10}$", message = "Mobile number should contain only digit")
 	public String mobile;
-	@NotBlank(message = "test")
-	@Email(message = "format issue")
+	//	@NotBlank(message = "Email cannot be blank")
+//	@Email(message = "Invalid email format")
 	public String emailId;
 	public boolean active;
 	public Gender gender;
-	@NotBlank(message = "test ")
-	@Size(min = 8, max = 20, message = "regex failed")
+	//	@NotBlank(message = "Password cannot be blank")
+//	@Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
 	public String password;
 	public String jwt;
 	public Boolean newUser;
