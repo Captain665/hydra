@@ -3,9 +3,6 @@ package common.customer.resources;
 import common.customer.model.CustomerModel;
 import common.enums.Gender;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 public class CustomerResource {
 	public Long id;
 	public String fullName;

@@ -14,7 +14,7 @@ PlayKeys.externalizeResourcesExcludes += baseDirectory.value / "conf" / "META-IN
 libraryDependencies += javaJpa
 
 // https://mvnrepository.com/artifact/org.hibernate.orm/hibernate-core
-libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.1.Final"
+libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.3.Final"
 
 // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 libraryDependencies += "com.mysql" % "mysql-connector-j" % "9.1.0"

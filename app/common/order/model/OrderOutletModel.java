@@ -1,14 +1,11 @@
 package common.order.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.mysql.cj.xdevapi.JsonString;
 import common.base.BaseModel;
 import jakarta.persistence.*;
-import org.hibernate.annotations.TypeDef;
 
 import java.util.Date;
 
-//@TypeDef(name = "json", typeClass = JsonString.class)
 @Entity
 @Table(name = "order_outlets")
 public class OrderOutletModel extends BaseModel {
