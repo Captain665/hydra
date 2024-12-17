@@ -8,15 +8,18 @@ import common.customer.resources.CustomerResource;
 import common.customer.resources.CustomerResponseResource;
 import common.enums.PermissionType;
 import jakarta.inject.Inject;
+import jakarta.validation.*;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Http;
 import play.mvc.Result;
 import utilities.JwtUtilities;
+import utilities.ResourceValidator;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
@@ -25,11 +28,13 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 public class CustomerController extends Controller {
 
 	private final CustomerResourceHandler handler;
+	private final ResourceValidator<CustomerResource> validator;
 	private final Logger.ALogger logger = Logger.of("application.CustomerController");
 
 	@Inject
-	public CustomerController(CustomerResourceHandler handler) {
+	public CustomerController(CustomerResourceHandler handler, ResourceValidator<CustomerResource> validator) {
 		this.handler = handler;
+		this.validator = validator;
 	}
 
 	public CompletionStage<Result> create(Http.Request request) {
@@ -37,9 +42,15 @@ public class CustomerController extends Controller {
 		logger.info("[" + request.id() + "] " + "json " + json.toString());
 		CustomerResource resource = Json.fromJson(json, CustomerResource.class);
 		if (json.isEmpty()) {
-			logger.error("[" + request.id() + "] + error -> Request body can not be empty");
+			logger.error("[" + request.id() + "] + error : Request body can not be empty");
 			return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Request body can not be empty"))));
 		}
+		String validation = validator.resourcePreValidation(resource);
+		if (validation != null) {
+			logger.error("[" + request.id() + "] + error : " + validation);
+			return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("error :- " + validation))));
+		}
+
 		return handler.create(resource).thenApplyAsync(
 				customer -> {
 					Map<String, String> payload = new HashMap<>();
