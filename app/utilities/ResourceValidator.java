@@ -9,7 +9,7 @@ import java.util.Set;
 public class ResourceValidator<T> {
 	private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 	private final Validator validator = factory.getValidator();
-	private final Logger.ALogger logger = Logger.of("utilities.Validation");
+	private final Logger.ALogger logger = Logger.of("utilities.ResourceValidator");
 
 	public String resourcePreValidation(T resource) {
 		logger.info("pre validation start ...");
@@ -19,7 +19,7 @@ public class ResourceValidator<T> {
 			for (ConstraintViolation<T> violation : violations) {
 				error.append(", ").append(violation.getMessage());
 			}
-			logger.info("error is found in the pre-validation");
+			logger.error("error is found in the pre-validation");
 			return error.toString();
 		}
 		logger.info("No error found in the pre-validation");
