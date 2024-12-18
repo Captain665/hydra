@@ -1,7 +1,4 @@
 import com.google.inject.AbstractModule;
-import jakarta.validation.ConstraintValidatorFactory;
-import jakarta.validation.Validation;
-import jakarta.validation.ValidatorFactory;
 import v2.customer.CustomerRepository;
 import v2.customer.JPACustomerRepository;
 import v2.order.JPAOrderRepository;

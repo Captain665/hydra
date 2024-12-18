@@ -42,12 +42,12 @@ public class CustomerController extends Controller {
 		logger.info("[" + request.id() + "] " + "json " + json.toString());
 		CustomerResource resource = Json.fromJson(json, CustomerResource.class);
 		if (json.isEmpty()) {
-			logger.error("[" + request.id() + "] + error : Request body can not be empty");
+			logger.error("[" + request.id() + "] " + " error : Request body can not be empty");
 			return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("Request body can not be empty"))));
 		}
 		String validation = validator.resourcePreValidation(resource);
 		if (validation != null) {
-			logger.error("[" + request.id() + "] + error : " + validation);
+			logger.error("[" + request.id() + "] " + " error : " + validation);
 			return supplyAsync(() -> badRequest(Json.toJson(new ApiFailure("error :- " + validation))));
 		}
 
