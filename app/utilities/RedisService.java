@@ -13,7 +13,7 @@ public class RedisService<T> {
 
 
 	public RedisService() {
-		this.redissonClient = RedisHelper.getClient();
+		this.redissonClient = RedisHelper.getHelperClient();
 	}
 
 	public void setClient(String key, T value) {
