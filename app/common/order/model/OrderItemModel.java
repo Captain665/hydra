@@ -31,6 +31,22 @@ public class OrderItemModel extends BaseModel {
 	public OrderItemModel() {
 	}
 
+	public OrderItemModel(Long quantity,
+						  String name,
+						  String description,
+						  Boolean isVeg,
+						  BigDecimal basePrice,
+						  BigDecimal tax,
+						  BigDecimal sellingPrice) {
+		this.quantity = quantity;
+		this.name = name;
+		this.description = description;
+		this.isVeg = isVeg;
+		this.basePrice = basePrice;
+		this.tax = tax;
+		this.sellingPrice = sellingPrice;
+	}
+
 	public Long getQuantity() {
 		return quantity;
 	}
@@ -93,22 +109,6 @@ public class OrderItemModel extends BaseModel {
 
 	public void setOrder(OrderModel order) {
 		this.order = order;
-	}
-
-	public OrderItemModel(Long quantity,
-						  String name,
-						  String description,
-						  Boolean isVeg,
-						  BigDecimal basePrice,
-						  BigDecimal tax,
-						  BigDecimal sellingPrice) {
-		this.quantity = quantity;
-		this.name = name;
-		this.description = description;
-		this.isVeg = isVeg;
-		this.basePrice = basePrice;
-		this.tax = tax;
-		this.sellingPrice = sellingPrice;
 	}
 
 	@Override

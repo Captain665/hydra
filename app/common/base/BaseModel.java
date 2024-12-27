@@ -13,7 +13,7 @@ public abstract class BaseModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	protected Long id;
-	@Column(name = "created_at")
+	@Column(name = "created_at", updatable = false)
 	protected LocalDateTime createdAt;
 	@Column(name = "created_by")
 	protected String createdBy;
@@ -35,10 +35,6 @@ public abstract class BaseModel implements Serializable {
 		return createdAt;
 	}
 
-	public void setCreatedAt(LocalDateTime createdAt) {
-		this.createdAt = createdAt;
-	}
-
 	public String getCreatedBy() {
 		return createdBy;
 	}
@@ -51,10 +47,6 @@ public abstract class BaseModel implements Serializable {
 		return updatedAt;
 	}
 
-	public void setUpdatedAt(LocalDateTime updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
 	public String getUpdatedBy() {
 		return updatedBy;
 	}
@@ -63,12 +55,11 @@ public abstract class BaseModel implements Serializable {
 		this.updatedBy = updatedBy;
 	}
 
-
 	@PrePersist
 	public void setCreatedAt() {
 		this.createdAt = LocalDateTime.now();
+		this.updatedAt = LocalDateTime.now();
 	}
-
 
 	@PreUpdate
 	public void setUpdatedAt() {

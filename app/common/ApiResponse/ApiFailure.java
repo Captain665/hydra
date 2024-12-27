@@ -7,5 +7,5 @@ public class ApiFailure extends ApiResponse {
 	public ApiFailure(String message) {
 		super(Status.FAILURE, message, null);
 	}
-	//upd
+	
 }

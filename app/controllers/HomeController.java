@@ -15,7 +15,8 @@ public class HomeController extends Controller implements HttpErrorHandler {
 	private final Logger.ALogger logger = Logger.of("Controller.HomeController");
 
 	public Result index() {
-		return ok(views.html.index.render());
+//		return ok(views.html.index.render());
+		return ok("OK");
 	}
 
 	public Result health() {

@@ -11,7 +11,7 @@ public class RedisHelper {
 	private final static Logger.ALogger logger = Logger.of("redisClientUtility");
 	private static RedissonClient redissonClient;
 
-	public static RedissonClient getClient() {
+	public static RedissonClient getHelperClient() {
 		if (redissonClient == null) {
 			synchronized (RedisHelper.class) {
 				if (redissonClient == null) {

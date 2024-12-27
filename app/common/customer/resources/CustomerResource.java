@@ -4,7 +4,6 @@ import common.customer.model.CustomerModel;
 import common.enums.Gender;
 import jakarta.validation.constraints.*;
 
-
 public class CustomerResource {
 	public Long id;
 	@NotBlank(message = "Customer name cannot be blank")
