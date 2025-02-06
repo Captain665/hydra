@@ -70,6 +70,10 @@ libraryDependencies += "org.hibernate" % "hibernate-validator" % "8.0.0.Final" e
 
 dependencyOverrides += "jakarta.validation" % "jakarta.validation-api" % "3.1.0"
 
+// https://mvnrepository.com/artifact/com.ibm.icu/icu4j
+libraryDependencies += "com.ibm.icu" % "icu4j" % "76.1"
+
+
 
 
 

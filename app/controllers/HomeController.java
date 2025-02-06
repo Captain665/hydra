@@ -6,6 +6,7 @@ import play.http.HttpErrorHandler;
 import play.libs.Json;
 import play.mvc.*;
 
+import java.io.File;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
@@ -15,8 +16,8 @@ public class HomeController extends Controller implements HttpErrorHandler {
 	private final Logger.ALogger logger = Logger.of("Controller.HomeController");
 
 	public Result index() {
-//		return ok(views.html.index.render());
-		return ok("OK");
+		return ok(views.html.index.render());
+//		return ok("OK");
 	}
 
 	public Result health() {

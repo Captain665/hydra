@@ -1,0 +1,236 @@
+@(invoice: common.OrderInvoice)
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+        }
+
+        .invoice-container {
+            max-width: 900px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #000;
+        }
+
+        .header {
+            text-align: center;
+        }
+
+        .footer {
+            text-align: left;
+        }
+
+        .title {
+            font-weight: bold;
+            font-size: 20px;
+            text-align: center;
+            line-height: 0px;
+            margin-bottom: -5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 1px solid #000;
+            padding: 8px;
+            font-size: 14px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        #hindiAmount {
+            text-align: right;
+        }
+
+        .cont {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text {
+            width: 40%;
+        }
+
+        .qr {
+            width: 30%;
+            margin: auto;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .price {
+            width: 30%;
+        }
+
+        .priceTest {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .address {
+            margin-top: -15px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="invoice-container">
+    <div class="header">
+        <img src="https://images.seeklogo.com/logo-png/18/1/irctc-logo-png_seeklogo-184098.png" alt="IRCTC Logo"
+             width="50">
+        <h2>Indian Railway Catering and Tourism Corporation Limited</h2>
+        <p class="address">B-148, 11th Floor, Statesman House, Barakhamba Road, New Delhi 110001</p>
+        <hr>
+        <h3 class="title">TAX INVOICE</h3>
+        <p>Original copy for recepient</p>
+        <hr>
+    </div>
+    <table>
+        <tr>
+            <td class="bold">Invoice No:</td>
+            <td>@invoice.invoiceNo</td>
+            <td class="bold">Payment Type:</td>
+            <td>@invoice.paymentType</td>
+        </tr>
+        <tr>
+            <td class="bold">Invoice Date:</td>
+            <td>@invoice.invoiceDate</td>
+            <td class="bold">Order ID:</td>
+            <td>@invoice.orderId</td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>Bill To</th>
+            <th>Supplier Details</th>
+        </tr>
+        <tr>
+            <td><span class="bold">Name:</span> <span>@invoice.customerName</span><br>
+            </td>
+            <td><span class="bold">Name:</span> <span>@invoice.supplierName</span><br>
+                <span class="bold">Address:</span> <span>@invoice.supplierAddress</span>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>Journey Info</th>
+            <th>Place of Supply</th>
+        </tr>
+        <tr>
+            <td><span class="bold">Train No:</span> <span>@invoice.trainNo</span><br>
+                <span class="bold">Seat No:</span> <span>@invoice.seatNo</span><br>
+                <span class="bold">Coach No:</span> <span>@invoice.coachNo</span>
+            </td>
+            <td><span class="bold">Place:</span> <span>@invoice.place</span><br>
+                <span class="bold">State:</span> <span>@invoice.state</span><br>
+                <span class="bold">Delivery Address:</span> <span>@invoice.deliveryAddress</span>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>S No</th>
+            <th>Item</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th>Taxable Value</th>
+            <th>Tax Amount</th>
+            <th>Item Total</th>
+        </tr>
+        @for((item, index) <- invoice.items.zipWithIndex) {
+        <tr>
+            <td>@(index +1)</td>
+            <td><span>@item.itemName</span><br><small class="bold">HSN:</small>
+                <span>@item.hsnCode</span></td>
+            <td class="right">₹ <span>@item.unitPrice</span></td>
+            <td class="right"><span>@item.qty</span></td>
+            <td class="right">₹ <span>@item.taxableValue</span></td>
+            <td class="right">₹ <span>@item.taxAmount</span></td>
+            <td class="right">₹ <span>@item.itemTotal</span></td>
+        </tr>
+        }
+    </table>
+
+    <div class="cont">
+        <div class="text">
+            <p class="bold">Tax payable on reverse charge basis: No</p>
+            <p>For IRCTC Ltd.<br>This is a computer-generated document, no signature is required.</p>
+            <p>Get the Food on Track app on Google Play or App Store for a hassle-free experience.</p>
+        </div>
+        <div class="qr-container qr">
+            <div id="qrcode"></div>
+        </div>
+        <div class="price">
+            <p class="priceTest">Subtotal <span>@invoice.subtotal</span></p>
+            <p class="priceTest">CGST <span>@invoice.cgst</span></p>
+            <p class="priceTest">SGST <span>@invoice.sgst</span></p>
+            <p class="priceTest bold">Total Invoice Value <span>@invoice.totalAmount</span></p>
+            <p class="bold">Rupees <span>@invoice.amountWords   </span> Only</p>
+        </div>
+    </div>
+    <hr>
+
+
+    <div class="footer">
+        <p class="bold">Disclaimer:</p>
+        <p>This is a system-generated invoice. If you haven't received your order, you can provide
+            feedback/complaint against the order.</p>
+        <p>Feedback maybe submitted on our website(www.ecatering.irctc.co.in) or the Food on Track app within 5 days
+            after delivery.</p>
+        <p>For further enquiry and necessary action, as per Terms and Conditions of IRCTC eCatering Food Delivery.
+        </p>
+        <p>The seller shall be responsible for issues relating to statutory purposes like price, quality, etc.</p>
+        <p>A receipt of delivery charges(if any) shall be issued and handed over to the customer by the delivery
+            agent at the time of delivery.</p>
+        <p>All disputes subject to Delhi Jurisdiction</p>
+    </div>
+</div>
+<script>
+
+    Object.keys(invoiceData).forEach(key => {
+        document.getElementById(key).innerText = invoiceData[key];
+    });
+
+    new QRCode(document.getElementById("qrcode"), {
+        text: JSON.stringify(invoice),
+        width: 150,
+        height: 150
+    });
+</script>
+</body>
+
+</html>
