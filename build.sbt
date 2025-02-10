@@ -71,11 +71,11 @@ libraryDependencies += "org.hibernate" % "hibernate-validator" % "8.0.0.Final" e
 dependencyOverrides += "jakarta.validation" % "jakarta.validation-api" % "3.1.0"
 
 libraryDependencies += "com.ibm.icu" % "icu4j" % "76.1"
-// https://mvnrepository.com/artifact/org.jsoup/jsoup
+
 libraryDependencies += "org.jsoup" % "jsoup" % "1.18.3"
-// https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-core
+
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
-// https://mvnrepository.com/artifact/org.xhtmlrenderer/flying-saucer-pdf
+
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
 
 
