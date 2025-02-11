@@ -1,0 +1,307 @@
+@(invoice: common.OrderInvoice)
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .invoice-container {
+            max-width: 100%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border: 1px solid #000;
+        }
+
+        .title {
+            font-size: 15px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 5px; /* Reduce space below TAX INVOICE */
+        }
+
+        .header-line {
+            width: 100%;
+            border: 0.5px solid gray; /* Ensure clean separation */
+            margin-top: 3px;
+            margin-bottom: 3px;
+        }
+
+        .footer {
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th,
+        td {
+            border: 0.5px solid #000;
+            padding: 8px;
+            font-size: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .right {
+            text-align: right;
+        }
+
+        #hindiAmount {
+            text-align: right;
+        }
+
+        .cont {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .text {
+            width: 70%;
+        }
+
+        .price {
+            width: 30%;
+        }
+
+        .priceTest {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .address {
+            display: inline-block;
+            max-width: 100%; /* Prevent excessive line breaks */
+            white-space: normal; /* Allow wrapping within max width */
+            text-align: center;
+            line-height: 1.2; /* Reduce extra spacing between lines */
+        }
+
+        p {
+            font-size: 12px;
+        }
+        .no-border{
+            border: none;
+        }
+        .center {
+            text-align: center;
+        }
+         .header {
+            text-align: center;
+            margin-bottom: 10px; /* Add space below the header */
+            border-bottom: 2px;
+        }
+        .header-tr{
+            padding:0px;
+        }
+        .amount_table {
+            width: 49%;
+            display: inline-block;
+            vertical-align: top;
+        }
+        .table-container {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+        }
+        .header-td {
+            margin-top: 0px;
+            padding: 3px;
+        }
+        .width35{
+            width: 35%;
+        }
+        .price-padding{
+            padding-left: 50px;
+        }
+        .small-font{
+            font-size: 10px;
+        }
+        .medium-font{
+            font-size: 20px;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="invoice-container">
+    <table class="header">
+        <tr class="header-tr">
+            <img src="https://images.seeklogo.com/logo-png/18/1/irctc-logo-png_seeklogo-184098.png" alt="IRCTC Logo"
+                 width="50">
+        </tr>
+        <tr class="header-tr">
+            <h3 class="header-tr">Indian Railway Catering and Tourism Corporation Limited</h3>
+        </tr>
+        <tr class="header-tr">
+            <td class="no-border center header-tr">B-148 11th Floor Statesman House Barakhamba Road New Delhi 110001
+            </td>
+        </tr>
+        <hr class="header-line"/>
+        <tr>
+            <td class="header-tr no-border center bold medium-font">TAX INVOICE</td>
+        </tr>
+        <tr>
+            <td class="no-border center header-tr small-font">Original copy for recipient</td>
+        </tr>
+        <hr class="header-line"/>
+
+    </table>
+
+    <table>
+        <tr>
+            <td class="bold">Invoice No:</td>
+            <td>@invoice.invoiceNo</td>
+            <td class="bold">Payment Type:</td>
+            <td>@invoice.paymentType</td>
+        </tr>
+        <tr>
+            <td class="bold">Invoice Date:</td>
+            <td>@invoice.invoiceDate</td>
+            <td class="bold">Order ID:</td>
+            <td>@invoice.orderId</td>
+        </tr>
+    </table>
+
+    <table>
+        <tr class="width35">
+            <th class="width35">Bill To</th>
+            <th class="width35">Supplier Details</th>
+        </tr>
+        <tr class="">
+            <td class=""><span class="bold">Name:</span> <span>@invoice.customerName</span><br/>
+            </td>
+            <td class=""><span class="bold ">Name:</span> <span>@invoice.supplierName</span><br/>
+                <span class="bold">Address:</span> <span>@invoice.supplierAddress</span>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr class="width35">
+            <th class="width35">Journey Info</th>
+            <th class="width35">Place of Supply</th>
+        </tr>
+        <tr class="">
+            <td class=""><span class="bold">Train No:</span> <span>@invoice.trainNo</span><br/>
+                <span class="bold">Seat No:</span> <span>@invoice.seatNo</span><br/>
+                <span class="bold">Coach No:</span> <span>@invoice.coachNo</span>
+            </td>
+            <td class=""><span class="bold">Place:</span> <span>@invoice.place</span><br/>
+                <span class="bold">State:</span> <span>@invoice.state</span><br/>
+                <span class="bold">Delivery Address:</span> <span>@invoice.deliveryAddress</span>
+            </td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <th>S No</th>
+            <th>Item</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th>Taxable Value</th>
+            <th>Tax Amount</th>
+            <th>Item Total</th>
+        </tr>
+        @for((item, index) <- invoice.items.zipWithIndex) {
+        <tr>
+            <td>@(index +1)</td>
+            <td><span>@item.itemName</span><br/><small class="bold">HSN:</small>
+                <span>@item.hsnCode</span></td>
+            <td class="right">₹ <span>@item.unitPrice</span></td>
+            <td class="right"><span>@item.qty</span></td>
+            <td class="right">₹ <span>@item.taxableValue</span></td>
+            <td class="right">₹ <span>@item.taxAmount</span></td>
+            <td class="right">₹ <span>@item.itemTotal</span></td>
+        </tr>
+        }
+    </table>
+
+    <div class="table-container">
+        <table class="amount_table">
+            <tr>
+                <td class="bold no-border header-td">Tax payable on reverse charge basis: No</td>
+            </tr>
+            <tr>
+                <td class="no-border header-td">For IRCTC Ltd.<br/>This is a computer-generated document, no signature is required.</td>
+            </tr>
+            <tr>
+                <td class="no-border header-td">Get the Food on Track app on Google Play or App Store for a hassle-free experience.</td>
+            </tr>
+        </table>
+        <table class="amount_table">
+            <tr>
+                <td class="priceTest no-border header-td price-padding">Subtotal <span>@invoice.subtotal</span></td>
+            </tr>
+            <tr>
+                <td class="priceTest no-border header-td price-padding">CGST <span>@invoice.cgst</span></td>
+            </tr>
+            <tr>
+                <td class="priceTest no-border header-td price-padding">SGST <span>@invoice.sgst</span></td>
+            </tr>
+            <tr>
+                <td class="priceTest bold no-border header-td price-padding">Total Invoice Value <span>@invoice.totalAmount</span></td>
+            </tr>
+            <tr>
+                <td class="bold no-border header-td price-padding">Rupees <span>@invoice.amountWords   </span> Only</td>
+            </tr>
+        </table>
+    </div>
+    <hr class="header-line"/>
+
+
+    <table class="footer">
+        <tr>
+            <th class="bold no-border">Disclaimer:</th>
+        </tr>
+        <tr>
+            <td class="no-border header-td">This is a system-generated invoice. If you haven't received your order, you can provide
+                feedback/complaint against the order.</td>
+        </tr>
+        <tr>
+            <td class="no-border header-td">Feedback maybe submitted on our website(www.ecatering.irctc.co.in) or the Food on Track app within 5 days
+                after delivery.</td>
+        </tr>
+        <tr>
+            <td class="no-border header-td">For further enquiry and necessary action, as per Terms and Conditions of IRCTC eCatering Food Delivery.
+            </td>
+        </tr>
+        <tr>
+            <td class="no-border header-td">The seller shall be responsible for issues relating to statutory purposes like price, quality, etc.</td>
+        </tr>
+        <tr>
+            <td class="no-border header-td">A receipt of delivery charges(if any) shall be issued and handed over to the customer by the delivery
+                agent at the time of delivery.</td>
+        </tr>
+        <tr>
+            <td class="no-border header-td">All disputes subject to Delhi Jurisdiction</td>
+        </tr>
+    </table>
+</div>
+</body>
+
+</html>

@@ -72,6 +72,7 @@ public class JPACustomerRepository implements CustomerRepository {
 
 	@Override
 	public CompletionStage<List<CustomerModel>> getAllCustomer() {
+
 		return supplyAsync(
 				() -> wrap(em -> {
 					TypedQuery<CustomerModel> query = em.createQuery(
@@ -91,7 +92,6 @@ public class JPACustomerRepository implements CustomerRepository {
 					}
 					entityManager.remove(model);
 					return Optional.of(true);
-
 				})
 		);
 	}

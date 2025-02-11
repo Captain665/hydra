@@ -28,7 +28,7 @@ libraryDependencies += "org.apache.logging.log4j" % "log4j-core" % "2.24.1"
 libraryDependencies += "org.hibernate" % "hibernate-entitymanager" % "3.6.9.Final"
 
 // https://mvnrepository.com/artifact/org.playframework/play-java-jpa
-libraryDependencies += "org.playframework" %% "play-java-jpa" % "3.0.5"
+libraryDependencies += "org.playframework" %% "play-java-jpa" % "3.0.5" exclude("javax.validation", "validation-api")
 
 // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
 libraryDependencies += "io.jsonwebtoken" % "jjwt-api" % "0.12.6"
@@ -55,4 +55,28 @@ libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind" % "2.14
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-core" % "2.14.3"
 
 libraryDependencies += "com.fasterxml.jackson.core" % "jackson-annotations" % "2.14.3"
+
+libraryDependencies += "jakarta.validation" % "jakarta.validation-api" % "3.1.0"
+
+libraryDependencies += "org.glassfish" % "jakarta.el" % "4.0.2"
+
+libraryDependencies += "org.hibernate.orm" % "hibernate-core" % "6.6.3.Final"
+
+libraryDependencies += "org.hibernate" % "hibernate-annotations" % "3.5.6-Final"
+
+libraryDependencies += "javax.validation" % "validation-api" % "2.0.1.Final" excludeAll()
+
+libraryDependencies += "org.hibernate" % "hibernate-validator" % "8.0.0.Final" exclude("javax.validation", "validation-api")
+
+dependencyOverrides += "jakarta.validation" % "jakarta.validation-api" % "3.1.0"
+
+libraryDependencies += "com.ibm.icu" % "icu4j" % "76.1"
+
+libraryDependencies += "org.jsoup" % "jsoup" % "1.18.3"
+
+libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
+
+libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
+
+
 

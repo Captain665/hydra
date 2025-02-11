@@ -2,14 +2,24 @@ package common.customer.resources;
 
 import common.customer.model.CustomerModel;
 import common.enums.Gender;
+import jakarta.validation.constraints.*;
 
 public class CustomerResource {
 	public Long id;
+	@NotBlank(message = "Customer name cannot be blank")
+	@Pattern(regexp = "^[A-Za-z ]+$", message = "Invalid name format")
 	public String fullName;
+	@NotBlank(message = "Customer mobile cannot be blank")
+	@Size(min = 10, max = 10, message = "Mobile number should be 10 digits")
+	@Pattern(regexp = "^[0-9]{10}$", message = "Mobile number should contain only digit")
 	public String mobile;
+	@NotBlank(message = "Email cannot be blank")
+	@Email(message = "Invalid email format")
 	public String emailId;
 	public boolean active;
 	public Gender gender;
+	@NotBlank(message = "Password cannot be blank")
+	@Size(min = 8, max = 20, message = "Password must be between 8 and 20 characters")
 	public String password;
 	public String jwt;
 	public Boolean newUser;
@@ -23,6 +33,16 @@ public class CustomerResource {
 		this.gender = customer.getGender();
 		this.jwt = null;
 		this.newUser = customer.getNewUser();
+	}
+
+	public CustomerResource(Long id, String fullName, String mobile, String emailId, boolean active, Gender gender, String jwt) {
+		this.id = id;
+		this.fullName = fullName;
+		this.mobile = mobile;
+		this.emailId = emailId;
+		this.active = active;
+		this.gender = gender;
+		this.jwt = jwt;
 	}
 
 	public Long getId() {
@@ -95,16 +115,6 @@ public class CustomerResource {
 
 	public void setNewUser(Boolean newUser) {
 		this.newUser = newUser;
-	}
-
-	public CustomerResource(Long id, String fullName, String mobile, String emailId, boolean active, Gender gender, String jwt) {
-		this.id = id;
-		this.fullName = fullName;
-		this.mobile = mobile;
-		this.emailId = emailId;
-		this.active = active;
-		this.gender = gender;
-		this.jwt = jwt;
 	}
 
 	@Override

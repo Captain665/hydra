@@ -1,29 +1,47 @@
 package controllers;
 
+import common.ApiResponse.ApiFailure;
+import play.Logger;
+import play.http.HttpErrorHandler;
+import play.libs.Json;
 import play.mvc.*;
 
-/**
- * This controller contains an action to handle HTTP requests
- * to the application's home page.
- */
-public class HomeController extends Controller {
+import java.io.File;
+import java.util.concurrent.CompletionStage;
 
-	/**
-	 * An action that renders an HTML page with a welcome message.
-	 * The configuration in the <code>routes</code> file means that
-	 * this method will be called when the application receives a
-	 * <code>GET</code> request with a path of <code>/</code>.
-	 */
+import static java.util.concurrent.CompletableFuture.supplyAsync;
+
+public class HomeController extends Controller implements HttpErrorHandler {
+
+	private final Logger.ALogger logger = Logger.of("Controller.HomeController");
+
 	public Result index() {
 		return ok(views.html.index.render());
+//		return ok("OK");
 	}
 
 	public Result health() {
 		return ok("health is OK");
 	}
 
-	public Result check() {
-		return ok("check is done");
+
+	@Override
+	public CompletionStage<Result> onClientError(Http.RequestHeader request, int statusCode, String message) {
+		logger.info("[" + request.id() + "] " + "request " + request + " statusCode " + statusCode + " message " + message);
+		return supplyAsync(() -> {
+			logger.info("[" + request.id() + "] " + " response " + message);
+			return badRequest(Json.toJson(
+					new ApiFailure(message)));
+		});
 	}
 
+	@Override
+	public CompletionStage<Result> onServerError(Http.RequestHeader request, Throwable exception) {
+		logger.info("[" + request.id() + "] " + "request " + request + " exception " + exception.getMessage());
+		return supplyAsync(() -> {
+			logger.info("[" + request.id() + "] " + " response " + exception.getMessage());
+			return badRequest(Json.toJson(
+					new ApiFailure(exception.getMessage())));
+		});
+	}
 }

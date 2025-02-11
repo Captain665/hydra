@@ -8,7 +8,7 @@ import java.util.Optional;
 public class OrderSearchResource implements QueryStringBindable<OrderSearchResource> {
 	public Integer page;
 	public Integer size;
-	
+
 	@Override
 	public Optional<OrderSearchResource> bind(String key, Map<String, String[]> data) {
 		String[] pageStr = data.get("page");
