@@ -78,14 +78,4 @@ libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
 
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
 
-// Apache-FOP for HTML to PDF
-libraryDependencies ++= Seq(
-  "org.apache.xmlgraphics" % "fop" % "2.10",
-  "org.apache.xmlgraphics" % "batik-transcoder" % "1.18",
-  "org.apache.xmlgraphics" % "xmlgraphics-commons" % "2.9",
-  "xerces" % "xercesImpl" % "2.12.2",
-  "xalan" % "xalan" % "2.7.3"
-)
-
-
 

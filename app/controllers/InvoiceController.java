@@ -68,8 +68,7 @@ public class InvoiceController extends Controller {
 		document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
 		document.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
 
-		String cleanedHtml = document.html().replaceAll("[\\r\\n]+", " ").trim();
-		return cleanedHtml;
+		return document.html().replaceAll("[\\r\\n]+", " ").trim();
 	}
 
 	public File htmlToPDFConverter(String htmlContent, String outputDirectory) {

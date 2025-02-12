@@ -19,8 +19,8 @@ public class RedisHelper {
 						Config config = Config.fromYAML(RedisHelper.class.getClassLoader().getResource("redisson.yaml"));
 						redissonClient = Redisson.create(config);
 						logger.info("Redisson client initialized successfully");
-					} catch (IOException e) {
-						logger.error("Failed to initialize Redisson client", e);
+					} catch (Exception e) {
+						logger.error("Failed to initialize Redisson client", e.getMessage());
 						throw new RuntimeException("Failed to initialize Redisson client", e);
 					}
 				}
