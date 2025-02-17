@@ -78,5 +78,9 @@ libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
 
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
 
+// https://mvnrepository.com/artifact/com.openhtmltopdf/openhtmltopdf-pdfbox
+libraryDependencies += "com.openhtmltopdf" % "openhtmltopdf-pdfbox" % "1.0.10"
+
+
 
 
