@@ -78,5 +78,10 @@ libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
 
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
 
+// https://mvnrepository.com/artifact/com.dynamicpdf.api/dynamicpdf-api
+libraryDependencies += "com.dynamicpdf.api" % "dynamicpdf-api" % "1.10.2"
+
+
+
 
 
