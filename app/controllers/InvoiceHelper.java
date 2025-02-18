@@ -22,7 +22,7 @@ public class InvoiceHelper {
 			HtmlConverter.convertToPdf(htmlInputStream, pdfOutputStream);
 			pdfOutputStream.close();
 			htmlInputStream.close();
-			return supplyAsync(() -> ok("pdf is generate"));
+			return supplyAsync(() -> ok(new File("public/invoices/itext.pdf")));
 		} catch (Exception e) {
 			return supplyAsync(() -> badRequest(Json.toJson(e.getMessage())));
 		}

@@ -2,6 +2,7 @@ package controllers;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.ibm.icu.util.ULocale;
+import com.itextpdf.html2pdf.HtmlConverter;
 import common.OrderInvoice;
 import jakarta.inject.Inject;
 import org.jsoup.Jsoup;
@@ -43,7 +44,7 @@ public class InvoiceController extends Controller {
 					OrderInvoice orderInvoice = new OrderInvoice(orderModel.get());
 					orderInvoice.setAmountWords(numberToWordConvert(orderModel.get().getCustomerPayable()));
 					orderInvoice.setInvoiceDate(dateFormat(orderModel.get().getDeliveryDate()));
-					File pdfFile = htmlToPDFConverter(invoice.render(orderInvoice).toString(), "../public/invoices/");
+					File pdfFile = htmlToPDFConverter(invoice.render(orderInvoice).toString(), "public/invoices/");
 					logger.info("file is generate");
 //					return ok(invoice.render(orderInvoice));
 					return ok(pdfFile);
@@ -96,7 +97,6 @@ public class InvoiceController extends Controller {
 			renderer.setDocumentFromString(xhtmlContent);
 			renderer.layout();
 			renderer.createPDF(os);
-
 			os.close();
 
 			logger.info("PDF saved at: " + outputPdfPath);
