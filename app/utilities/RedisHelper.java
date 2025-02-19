@@ -5,8 +5,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import play.Logger;
 
-import java.io.IOException;
-
 public class RedisHelper {
 	private final static Logger.ALogger logger = Logger.of("redisClientUtility");
 	private static RedissonClient redissonClient;

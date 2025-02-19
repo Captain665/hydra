@@ -33,7 +33,7 @@ public class InvoiceHelper {
 					e.printStackTrace();
 				}
 			});
-			logger.info("[" + request.id() + "] " + "Response	: Saving PDF at " + outputPdfPath);
+			logger.info("[" + request.id() + "] " + "Response: Saving PDF at " + outputPdfPath);
 			return ok(new File("public/invoices/itext.pdf"));
 		});
 	}

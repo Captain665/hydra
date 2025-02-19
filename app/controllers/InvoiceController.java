@@ -2,7 +2,6 @@ package controllers;
 
 import com.ibm.icu.text.RuleBasedNumberFormat;
 import com.ibm.icu.util.ULocale;
-import com.itextpdf.html2pdf.HtmlConverter;
 import common.OrderInvoice;
 import jakarta.inject.Inject;
 import org.jsoup.Jsoup;
@@ -46,7 +45,6 @@ public class InvoiceController extends Controller {
 					orderInvoice.setInvoiceDate(dateFormat(orderModel.get().getDeliveryDate()));
 					File pdfFile = htmlToPDFConverter(invoice.render(orderInvoice).toString(), "public/invoices/");
 					logger.info("file is generate");
-//					return ok(invoice.render(orderInvoice));
 					return ok(pdfFile);
 				});
 	}
@@ -64,36 +62,28 @@ public class InvoiceController extends Controller {
 	}
 
 	private static String htmlToXhtml(String html) {
-		// ✅ Use Jsoup to parse and enforce XHTML compliance
 		Document document = Jsoup.parse(html, "", Parser.xmlParser());
 		document.outputSettings().syntax(Document.OutputSettings.Syntax.xml);
 		document.outputSettings().escapeMode(Entities.EscapeMode.xhtml);
-
 		return document.html().replaceAll("[\\r\\n]+", " ").trim();
 	}
 
 	public File htmlToPDFConverter(String htmlContent, String outputDirectory) {
 		try {
 			logger.info("Generating PDF...");
-
-			// Ensure output directory exists
 			File directory = new File(outputDirectory);
 			if (!directory.exists()) {
 				directory.mkdirs();
 			}
 
-			// Generate a unique filename
 			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 			File outputPdfPath = new File(outputDirectory + "/invoice_" + timestamp + ".pdf");
-
-			logger.info("Saving PDF to: " + outputPdfPath);
 
 			String xhtmlContent = htmlToXhtml(htmlContent);
 
 			OutputStream os = new FileOutputStream(outputPdfPath);
 			ITextRenderer renderer = new ITextRenderer();
 
-			// ✅ Use Flying Saucer Renderer to process the HTML string
 			renderer.setDocumentFromString(xhtmlContent);
 			renderer.layout();
 			renderer.createPDF(os);
