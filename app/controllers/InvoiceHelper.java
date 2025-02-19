@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.concurrent.CompletionStage;
 
-import static java.util.concurrent.CompletableFuture.runAsync;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 import static play.mvc.Results.ok;
 
@@ -31,7 +30,6 @@ public class InvoiceHelper {
 				logger.error("[" + request.id() + "] " + "Error: " + e.getMessage());
 				e.printStackTrace();
 			}
-
 			logger.info("[" + request.id() + "] " + "Response: Saving PDF at " + outputPdfPath);
 			return ok(outputPdfPath);
 		});
