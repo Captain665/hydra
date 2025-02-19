@@ -60,8 +60,10 @@
 
     <logger name="jakarta.persistence.sql" level="OFF"/>
     <logger name="jakarta.persistence" level="OFF"/>
+    <logger name="com.itextpdf.layout.renderer" level="DEBUG"/>
 
-    <root level="INFO">
+
+    <root level="DEBUG">
         <appender-ref ref="ASYNCFILE"/>
         <appender-ref ref="ASYNCSTDOUT"/>
     </root>
