@@ -25,16 +25,15 @@ public class InvoiceHelper {
 			String outputDirectory = "public/invoices/";
 			String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 			File outputPdfPath = new File(outputDirectory + "/invoice_" + timestamp + ".pdf");
-			runAsync(() -> {
-				try {
-					HtmlConverter.convertToPdf(new FileInputStream(htmlFile), new FileOutputStream(outputPdfPath));
-				} catch (Exception e) {
-					logger.error("[" + request.id() + "] " + "Error: " + e.getMessage());
-					e.printStackTrace();
-				}
-			});
+			try {
+				HtmlConverter.convertToPdf(new FileInputStream(htmlFile), new FileOutputStream(outputPdfPath));
+			} catch (Exception e) {
+				logger.error("[" + request.id() + "] " + "Error: " + e.getMessage());
+				e.printStackTrace();
+			}
+
 			logger.info("[" + request.id() + "] " + "Response: Saving PDF at " + outputPdfPath);
-			return ok(new File("public/invoices/itext.pdf"));
+			return ok(outputPdfPath);
 		});
 	}
 }
