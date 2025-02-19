@@ -13,7 +13,7 @@ import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 public class HomeController extends Controller implements HttpErrorHandler {
 
-	private final Logger.ALogger logger = Logger.of("Controller.HomeController");
+	private final Logger.ALogger logger = Logger.of("controller.global.Exception.handler");
 
 	public Result index() {
 		return ok(views.html.index.render());
@@ -28,6 +28,7 @@ public class HomeController extends Controller implements HttpErrorHandler {
 	@Override
 	public CompletionStage<Result> onClientError(Http.RequestHeader request, int statusCode, String message) {
 		logger.info("[" + request.id() + "] " + "request " + request + " statusCode " + statusCode + " message " + message);
+		logger.info("[" + request.id() + "] " + " getting client exception");
 		return supplyAsync(() -> {
 			logger.info("[" + request.id() + "] " + " response " + message);
 			return badRequest(Json.toJson(
@@ -38,6 +39,7 @@ public class HomeController extends Controller implements HttpErrorHandler {
 	@Override
 	public CompletionStage<Result> onServerError(Http.RequestHeader request, Throwable exception) {
 		logger.info("[" + request.id() + "] " + "request " + request + " exception " + exception.getMessage());
+		logger.info("[" + request.id() + "] " + " getting server exception " + exception.getCause());
 		return supplyAsync(() -> {
 			logger.info("[" + request.id() + "] " + " response " + exception.getMessage());
 			return badRequest(Json.toJson(

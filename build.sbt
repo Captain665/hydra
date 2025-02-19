@@ -78,5 +78,12 @@ libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-core" % "9.11.3"
 
 libraryDependencies += "org.xhtmlrenderer" % "flying-saucer-pdf" % "9.11.3"
 
+// https://mvnrepository.com/artifact/com.itextpdf/itextpdf
+libraryDependencies += "com.itextpdf" % "itextpdf" % "5.5.13.4"
+
+// https://mvnrepository.com/artifact/com.itextpdf/html2pdf
+libraryDependencies += "com.itextpdf" % "html2pdf" % "3.0.1"
+
+
 
 

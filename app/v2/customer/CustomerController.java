@@ -8,7 +8,6 @@ import common.customer.resources.CustomerResource;
 import common.customer.resources.CustomerResponseResource;
 import common.enums.PermissionType;
 import jakarta.inject.Inject;
-import jakarta.validation.*;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -19,7 +18,6 @@ import utilities.ResourceValidator;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.CompletionStage;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;

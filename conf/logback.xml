@@ -4,7 +4,7 @@
 
 <!DOCTYPE configuration>
 
-<configuration debug="true">
+<configuration debug="false">
     <import class="ch.qos.logback.classic.encoder.PatternLayoutEncoder"/>
     <import class="ch.qos.logback.classic.AsyncAppender"/>
     <import class="ch.qos.logback.core.FileAppender"/>
@@ -60,6 +60,8 @@
 
     <logger name="jakarta.persistence.sql" level="OFF"/>
     <logger name="jakarta.persistence" level="OFF"/>
+    <logger name="com.itextpdf.layout.renderer" level="INFO"/>
+
 
     <root level="INFO">
         <appender-ref ref="ASYNCFILE"/>
